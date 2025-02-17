@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class screenShot : MonoBehaviour
+public class ScreenCapturer : MonoBehaviour
 {
-    // Singleton instance for easy access from other scripts
-    public static screenShot instance;
-
     // Flag to enable/disable screenshot functionality
     public bool takeScreenshots = false;
 
     // Default location to save screenshots
-
-    //Windows//
     public string screenshotLocation = "D:\\Max\\Screenshots";
 
     // Array of resolutions to cycle through when taking screenshots
@@ -26,21 +21,6 @@ public class screenShot : MonoBehaviour
     private bool takingScreens = false;
     private float waitF;
 
-    // Singleton pattern to ensure only one instance exists
-    void Awake()
-    {
-        if (instance)
-        {
-            // Destroy duplicate instances
-            Destroy(gameObject);
-        }
-        else
-        {
-            // Set the instance to this object and persist across scenes
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
 
     // Set screen resolution based on the provided string
     public void setXY(string _res)//separated ints with x//
