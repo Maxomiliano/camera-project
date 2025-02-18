@@ -31,23 +31,18 @@ public class CameraController : MonoBehaviour
         {
             EquipCamera();
         }
-        if (HasCamera && Mouse.current.leftButton.wasPressedThisFrame)
+        if (HasCamera && isAiming && Mouse.current.leftButton.wasPressedThisFrame)
         {
             photographer.TakeSnap();
         }
-        if (HasCamera && Mouse.current.rightButton.wasPressedThisFrame)
+
+        if (HasCamera && Mouse.current.rightButton.isPressed)
         {
-            if (!isAiming)
-            {
-                AimCamera();
-            }
+            AimCamera();
         }
-        if (HasCamera && Mouse.current.rightButton.wasPressedThisFrame)
+        else
         {
-            if (isAiming)
-            {
-                ReleaseCamera();
-            }
+            ReleaseCamera();
         }
     }
 
@@ -64,6 +59,8 @@ public class CameraController : MonoBehaviour
         playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
         isAiming = false;
     }
+
+
 
     private void EquipCamera()
     {
