@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Photographer : MonoBehaviour
 {
+    [SerializeField] CameraController cameraController;
     public Camera _fotoCamera;
     public RenderTexture _renderTexture;
     public RawImage _photoPreview;
@@ -21,6 +22,7 @@ public class Photographer : MonoBehaviour
     [ContextMenu("TakeSnap")]
     public void TakeSnap()
     {
+        if (cameraController == null || !cameraController.HasCamera) return;
         StartCoroutine(Screenshot());
         StartCoroutine(HidePhotoPreview());
     }
