@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,9 +9,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] Inventory inventory;
     [SerializeField] Transform handTransform;
     [SerializeField] GameObject cameraPrefab;
+    [SerializeField] GameObject playerFollowCamera;
     private bool m_hasCamera;
     private float batteryPercentage;
     private GameObject equippedCamera;
+    private bool isAiming = false;
 
     public bool HasCamera
     {
@@ -32,6 +35,34 @@ public class CameraController : MonoBehaviour
         {
             photographer.TakeSnap();
         }
+        if (HasCamera && Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            if (!isAiming)
+            {
+                AimCamera();
+            }
+        }
+        if (HasCamera && Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            if (isAiming)
+            {
+                ReleaseCamera();
+            }
+        }
+    }
+
+    private void AimCamera()
+    {
+        //Animacion de camara
+        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
+        isAiming = true;
+    }
+
+    private void ReleaseCamera()
+    {
+        //Animacion de camara
+        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
+        isAiming = false;
     }
 
     private void EquipCamera()
@@ -49,11 +80,12 @@ public class CameraController : MonoBehaviour
 
     private void InstantiateCamera()
     {
-        if(equippedCamera != null) Destroy(equippedCamera);
+        if (equippedCamera != null) Destroy(equippedCamera);
 
         equippedCamera = Instantiate(cameraPrefab, handTransform);
         equippedCamera.transform.localPosition = Vector3.zero;
         equippedCamera.transform.localRotation = Quaternion.identity;
+        equippedCamera.SetActive(true);
     }
 
     //Esta funcion se llamaria al presionar la tecla correspondiente de slot de inventario
