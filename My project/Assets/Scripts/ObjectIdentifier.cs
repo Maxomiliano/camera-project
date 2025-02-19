@@ -6,13 +6,12 @@ public class ObjectIdentifier : MonoBehaviour
     [SerializeField] private string _objectName;
     [SerializeField] private string _objectAction;
 
-    public string GetObjectName()
-    {
-        return _objectName;
-    }
+    public string ObjectName { get; private set; }
+    public string ObjectAction { get; private set; }
 
-    public string GetObjectAction() 
+    private void Awake()
     {
-        return _objectAction;
+        ObjectName = _objectName;
+        ObjectAction = _objectAction;
     }
 }

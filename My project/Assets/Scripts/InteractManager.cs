@@ -51,8 +51,8 @@ public class InteractManager : MonoBehaviour
                 interactCanvas.alpha = 1;
                 if (hit.collider.TryGetComponent(out ObjectIdentifier objectIdentifier))
                 {
-                    interactText.text = objectIdentifier.GetObjectName();
-                    interactAction.text = objectIdentifier.GetObjectAction();
+                    interactText.text = objectIdentifier.ObjectName;
+                    interactAction.text = objectIdentifier.ObjectAction;
                 }
                 else
                 {
