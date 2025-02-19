@@ -10,6 +10,7 @@ public class InteractManager : MonoBehaviour
 
     [SerializeField] private CanvasGroup interactCanvas;
     [SerializeField] private TextMeshProUGUI interactText;
+    [SerializeField] private TextMeshProUGUI interactAction;
 
     void Start()
     {
@@ -48,7 +49,16 @@ public class InteractManager : MonoBehaviour
             if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interactCanvas.alpha = 1;
-                //interactText.text = 
+                if (hit.collider.TryGetComponent(out ObjectIdentifier objectIdentifier))
+                {
+                    interactText.text = objectIdentifier.GetObjectName();
+                    interactAction.text = objectIdentifier.GetObjectAction();
+                }
+                else
+                {
+                    interactText.text = "";
+                    interactAction.text = "";
+                }
                 interactCanvas.transform.position = Camera.main.WorldToScreenPoint(hit.point + Vector3.up * 0.5f);
                 return;
             }

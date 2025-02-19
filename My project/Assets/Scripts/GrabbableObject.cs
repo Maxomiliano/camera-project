@@ -10,5 +10,5 @@ public class GrabbableObject : MonoBehaviour, IInteractable
         { 
             gameObject.SetActive(false);
         }
-    }    
+    }
 }
