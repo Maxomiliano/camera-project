@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -6,10 +7,13 @@ using UnityEngine.UI;
 public class Photographer : MonoBehaviour
 {
     [SerializeField] CameraController cameraController;
+    [SerializeField] private float batteryPerShot = 50f;
     public Camera _fotoCamera;
     public RenderTexture _renderTexture;
     public RawImage _photoPreview;
     public string screenshotDirectory = "D:/Max/Screenshots";
+
+    public static Action<float> OnScreenshotTaken;
 
     private void Start()
     {
@@ -23,8 +27,16 @@ public class Photographer : MonoBehaviour
     public void TakeSnap()
     {
         if (cameraController == null || !cameraController.HasCamera) return;
-        StartCoroutine(Screenshot());
-        StartCoroutine(HidePhotoPreview());
+        if (cameraController.CurrentBatteryPercentage > 0)
+        {
+            StartCoroutine(Screenshot());
+            StartCoroutine(HidePhotoPreview());
+            OnScreenshotTaken?.Invoke(batteryPerShot);
+        }
+        else
+        {
+            Debug.Log("You need to recharge the camera battery");
+        }
     }
 
     private IEnumerator Screenshot()

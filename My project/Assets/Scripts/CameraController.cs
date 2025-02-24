@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, IRechargeable
 {
     [SerializeField] Photographer photographer;
     [SerializeField] Inventory inventory;
@@ -11,9 +11,16 @@ public class CameraController : MonoBehaviour
     [SerializeField] GameObject cameraPrefab;
     [SerializeField] GameObject playerFollowCamera;
     private bool m_hasCamera;
-    private float batteryPercentage;
     private GameObject equippedCamera;
     private bool isAiming = false;
+
+    private float currentBatteryPercentage;
+    private float maxBatteryPercentage = 100;
+
+    public float CurrentBatteryPercentage
+    {
+        get => currentBatteryPercentage;
+    }
 
     public bool HasCamera
     {
@@ -24,6 +31,13 @@ public class CameraController : MonoBehaviour
             photographer.enabled = m_hasCamera;
         }
     }
+
+    private void Start()
+    {
+        Photographer.OnScreenshotTaken += DecreaseBattery;
+        currentBatteryPercentage = maxBatteryPercentage;
+    }
+
 
     private void Update()
     {
@@ -89,5 +103,28 @@ public class CameraController : MonoBehaviour
     public void SetHasCamera(bool hasCam = true)
     {
         HasCamera = hasCam;
+    }
+
+    public void DecreaseBattery(float batteryAmmount)
+    {
+        if (currentBatteryPercentage > 0)
+        {
+            currentBatteryPercentage -= batteryAmmount;
+            Debug.Log($"battery decreased by {batteryAmmount}");
+        }
+        else
+        {
+            Debug.Log("You have yo recharge the battery");
+            return;
+        }
+    }
+
+    public void RechargeBattery(float batteryAmmount)
+    {
+        if (currentBatteryPercentage == maxBatteryPercentage)
+        {
+            return;
+        }
+        currentBatteryPercentage += batteryAmmount;
     }
 }
