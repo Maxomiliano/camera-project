@@ -1185,7 +1185,9 @@ GameObject:
   - component: {fileID: 1268152291}
   - component: {fileID: 1268152290}
   - component: {fileID: 1268152289}
-  m_Layer: 0
+  - component: {fileID: 1268152293}
+  - component: {fileID: 1268152294}
+  m_Layer: 6
   m_Name: RechargStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1281,6 +1283,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1268152293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268152288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b2c85bc1cbe1a419cf44c87b79003f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToRecharge: 10
+--- !u!114 &1268152294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268152288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2213ac47685dbdf4c8d81598aace7de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectName: Charge Station
+  _objectAction: (E) Charge Item
 --- !u!1 &1455747581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,7 +2080,7 @@ PrefabInstance:
       objectReference: {fileID: 1455747583}
     - target: {fileID: 797771167373358047, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: batteryPerShot
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3497800380979328181, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: interactText

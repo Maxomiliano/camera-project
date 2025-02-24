@@ -78,6 +78,7 @@ public class CameraController : MonoBehaviour, IRechargeable
 
     private void EquipCamera()
     {
+        /*
         foreach (GrabbableObject item in inventory.GetAllItems())
         {
             SetHasCamera(true);
@@ -87,6 +88,20 @@ public class CameraController : MonoBehaviour, IRechargeable
         }
         SetHasCamera(false);
         Debug.Log("No tienes una camara en el inventario");
+        */
+        GrabbableObject cameraItem = inventory.GetEquippedItem();
+        if (cameraItem != null)
+        {
+            inventory.EquipItem(cameraItem);
+            SetHasCamera(true);
+            InstantiateCamera();
+            Debug.Log("Camara Equipada");
+        }
+        else
+        {
+            SetHasCamera(false);
+            Debug.Log("No tienes una camara en el inventario");
+        }
     }
 
     private void InstantiateCamera()
@@ -119,6 +134,12 @@ public class CameraController : MonoBehaviour, IRechargeable
         }
     }
 
+    public void RechargeBattery(float ammount)
+    {
+        throw new NotImplementedException();
+    }
+
+    /*
     public void RechargeBattery(float batteryAmmount)
     {
         if (currentBatteryPercentage == maxBatteryPercentage)
@@ -127,4 +148,5 @@ public class CameraController : MonoBehaviour, IRechargeable
         }
         currentBatteryPercentage += batteryAmmount;
     }
+    */
 }

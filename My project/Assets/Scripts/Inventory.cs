@@ -5,6 +5,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private int maxSlots = 3;
     private List<GrabbableObject> items = new List<GrabbableObject>();
+    GrabbableObject equipedItem;
 
     public bool AddItem(GrabbableObject item)
     {
@@ -44,5 +45,15 @@ public class Inventory : MonoBehaviour
     public List<GrabbableObject> GetAllItems()
     {
         return items;
+    }
+
+    public GrabbableObject GetEquippedItem()
+    {
+        return equipedItem;
+    }
+
+    public void EquipItem(GrabbableObject item)
+    {
+        equipedItem = item;
     }
 }
