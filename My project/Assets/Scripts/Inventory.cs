@@ -49,6 +49,14 @@ public class Inventory : MonoBehaviour
 
     public GrabbableObject GetEquippedItem()
     {
+        if (equipedItem != null)
+        {
+            Debug.Log($"Objeto equipado en Inventory: {equipedItem.name}");
+        }
+        else
+        {
+            Debug.Log("No hay objeto equipado en Inventory.");
+        }
         return equipedItem;
     }
 

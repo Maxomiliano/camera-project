@@ -78,21 +78,22 @@ public class CameraController : MonoBehaviour, IRechargeable
 
     private void EquipCamera()
     {
-        /*
-        foreach (GrabbableObject item in inventory.GetAllItems())
+        Debug.Log("Intentando equipar la cámara...");
+        foreach (var item in inventory.GetAllItems())
         {
-            SetHasCamera(true);
-            InstantiateCamera();
-            Debug.Log("Camara Equipada");
-            return;
+            if (item.name == "CameraObject")
+            {
+                inventory.EquipItem(item);
+                Debug.Log($"Camara equipada en inventario: {item.name}");
+                break;
+            }
         }
-        SetHasCamera(false);
-        Debug.Log("No tienes una camara en el inventario");
-        */
+
         GrabbableObject cameraItem = inventory.GetEquippedItem();
         if (cameraItem != null)
         {
-            inventory.EquipItem(cameraItem);
+            Debug.Log($"Objeto equipado: {cameraItem.name}");
+            //inventory.EquipItem(cameraItem);
             SetHasCamera(true);
             InstantiateCamera();
             Debug.Log("Camara Equipada");
