@@ -138,15 +138,4 @@ public class CameraController : MonoBehaviour, IRechargeable
     {
         throw new NotImplementedException();
     }
-
-    /*
-    public void RechargeBattery(float batteryAmmount)
-    {
-        if (currentBatteryPercentage == maxBatteryPercentage)
-        {
-            return;
-        }
-        currentBatteryPercentage += batteryAmmount;
-    }
-    */
 }

@@ -54,6 +54,9 @@ public class Inventory : MonoBehaviour
 
     public void EquipItem(GrabbableObject item)
     {
-        equipedItem = item;
+        if (item != null)
+        { 
+            equipedItem = item;
+        }
     }
 }
