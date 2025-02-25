@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : MonoBehaviour, IRechargeable
+public class CameraController : Rechargeable
 {
     [SerializeField] Photographer photographer;
     [SerializeField] Inventory inventory;
@@ -13,14 +13,6 @@ public class CameraController : MonoBehaviour, IRechargeable
     private bool m_hasCamera;
     private GameObject equippedCamera;
     private bool isAiming = false;
-
-    private float currentBatteryPercentage;
-    private float maxBatteryPercentage = 100;
-
-    public float CurrentBatteryPercentage
-    {
-        get => currentBatteryPercentage;
-    }
 
     public bool HasCamera
     {
@@ -93,7 +85,6 @@ public class CameraController : MonoBehaviour, IRechargeable
         if (cameraItem != null)
         {
             Debug.Log($"Objeto equipado: {cameraItem.name}");
-            //inventory.EquipItem(cameraItem);
             SetHasCamera(true);
             InstantiateCamera();
             Debug.Log("Camara Equipada");
@@ -119,24 +110,5 @@ public class CameraController : MonoBehaviour, IRechargeable
     public void SetHasCamera(bool hasCam = true)
     {
         HasCamera = hasCam;
-    }
-
-    public void DecreaseBattery(float batteryAmmount)
-    {
-        if (currentBatteryPercentage > 0)
-        {
-            currentBatteryPercentage -= batteryAmmount;
-            Debug.Log($"battery decreased by {batteryAmmount}");
-        }
-        else
-        {
-            Debug.Log("You have yo recharge the battery");
-            return;
-        }
-    }
-
-    public void RechargeBattery(float ammount)
-    {
-        throw new NotImplementedException();
     }
 }

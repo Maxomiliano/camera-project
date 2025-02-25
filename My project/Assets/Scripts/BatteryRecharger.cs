@@ -1,12 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class BatteryRecharger : MonoBehaviour, IInteractable
 {
     [SerializeField] float timeToRecharge = 10f;
-    private float rechargeAmmount;
-    private float maxBatteryPercentage = 100;
-    private IRechargeable rechargeableObject;
     Inventory inventory;
+    private Coroutine rechargeBatteryCoroutine;
 
     private void Start()
     {
@@ -15,23 +14,28 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        GrabbableObject objectToRecharg = inventory.GetItem(0);
-        if (objectToRecharg != null && objectToRecharg is IRechargeable)
+        GrabbableObject objectToRecharg = inventory.GetEquippedItem();
+        if (objectToRecharg == null) return;
+
+        CameraController cameraController = FindFirstObjectByType<CameraController>();
+        if (cameraController == null) return;
+
+        if (rechargeBatteryCoroutine != null)
         {
-            rechargeableObject = objectToRecharg as IRechargeable;
+            StopCoroutine(rechargeBatteryCoroutine);
         }
-        RechargeBattery(rechargeableObject);
-        Debug.Log("Battery Recharging");
+        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(cameraController));
     }
 
-    private void RechargeBattery(IRechargeable rechargableObj)
+    private IEnumerator RechargeBattery(Rechargeable rechargableObj)
     {
-        if (rechargeableObject == null)
+        float rechargeRate = rechargableObj.MaxBatteryPercentage / timeToRecharge;
+        while (rechargableObj.CurrentBatteryPercentage < rechargableObj.MaxBatteryPercentage)
         {
-            Debug.LogError("Intentando cargar objeto nulo");
-            return;
+            rechargableObj.RechargeBattery(rechargeRate * Time.deltaTime);
+            yield return null;
         }
-        rechargableObj.RechargeBattery(maxBatteryPercentage / timeToRecharge * Time.deltaTime);
-        //rechargeAmmount += timeToRecharge * Time.deltaTime;
+        rechargableObj.RechargeBattery(rechargableObj.MaxBatteryPercentage);
+        rechargeBatteryCoroutine = null;
     }
 }
