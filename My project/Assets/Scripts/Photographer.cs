@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Photographer : MonoBehaviour
 {
-    [SerializeField] CameraController cameraController;
     [SerializeField] private float batteryPerShot = 50f;
     public Camera _fotoCamera;
     public RenderTexture _renderTexture;
@@ -23,20 +22,11 @@ public class Photographer : MonoBehaviour
         }
     }
 
-    [ContextMenu("TakeSnap")]
     public void TakeSnap()
     {
-        if (cameraController == null || !cameraController.HasCamera) return;
-        if (cameraController.CurrentBatteryPercentage > 0)
-        {
-            StartCoroutine(Screenshot());
-            StartCoroutine(HidePhotoPreview());
-            OnScreenshotTaken?.Invoke(batteryPerShot);
-        }
-        else
-        {
-            Debug.Log("You need to recharge the camera battery");
-        }
+        StartCoroutine(Screenshot());
+        StartCoroutine(HidePhotoPreview());
+        OnScreenshotTaken?.Invoke(batteryPerShot);
     }
 
     private IEnumerator Screenshot()

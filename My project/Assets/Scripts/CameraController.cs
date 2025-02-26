@@ -3,112 +3,63 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : Rechargeable
+public class CameraController : GrabbableObject
 {
     [SerializeField] Photographer photographer;
     [SerializeField] Inventory inventory;
-    [SerializeField] Transform handTransform;
     [SerializeField] GameObject cameraPrefab;
     [SerializeField] GameObject playerFollowCamera;
-    private bool m_hasCamera;
-    private GameObject equippedCamera;
-    private bool isAiming = false;
+    [SerializeField] Rechargeable rechargeable;
 
-    public bool HasCamera
-    {
-        get => m_hasCamera;
-        set
-        {
-            m_hasCamera = value;
-            photographer.enabled = m_hasCamera;
-        }
-    }
+    private GameObject equippedCamera;
+    private bool m_isAiming;
+
+    public Rechargeable Rechargeable { get => rechargeable; }
 
     private void Start()
     {
-        Photographer.OnScreenshotTaken += DecreaseBattery;
-        currentBatteryPercentage = maxBatteryPercentage;
+        Photographer.OnScreenshotTaken += rechargeable.DecreaseBattery;
     }
 
-
-    private void Update()
+    private void OnDestroy()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            EquipCamera();
-        }
-        if (HasCamera && isAiming && Mouse.current.leftButton.wasPressedThisFrame)
-        {
+        Photographer.OnScreenshotTaken -= rechargeable.DecreaseBattery;
+    }
+
+    public override void PrepareObject()
+    {
+        //Animacion de camara
+        m_isAiming = true;
+        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
+    }
+
+    public override void UnprepareObject()
+    {
+        //Animacion de camara
+        m_isAiming = false;
+        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
+    }
+
+    public override void UseObject()
+    {
+        if (m_isAiming && Rechargeable.CurrentBatteryPercentage > 0)
+        { 
             photographer.TakeSnap();
         }
-
-        if (HasCamera && Mouse.current.rightButton.isPressed)
-        {
-            AimCamera();
-        }
-        else
-        {
-            ReleaseCamera();
-        }
     }
 
-    private void AimCamera()
-    {
-        //Animacion de camara
-        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
-        isAiming = true;
-    }
-
-    private void ReleaseCamera()
-    {
-        //Animacion de camara
-        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
-        isAiming = false;
-    }
-
-
-
-    private void EquipCamera()
-    {
-        Debug.Log("Intentando equipar la cámara...");
-        foreach (var item in inventory.GetAllItems())
-        {
-            if (item.name == "CameraObject")
-            {
-                inventory.EquipItem(item);
-                Debug.Log($"Camara equipada en inventario: {item.name}");
-                break;
-            }
-        }
-
-        GrabbableObject cameraItem = inventory.GetEquippedItem();
-        if (cameraItem != null)
-        {
-            Debug.Log($"Objeto equipado: {cameraItem.name}");
-            SetHasCamera(true);
-            InstantiateCamera();
-            Debug.Log("Camara Equipada");
-        }
-        else
-        {
-            SetHasCamera(false);
-            Debug.Log("No tienes una camara en el inventario");
-        }
-    }
-
-    private void InstantiateCamera()
+    public override void OnEquip(Transform handPosition)
     {
         if (equippedCamera != null) Destroy(equippedCamera);
 
-        equippedCamera = Instantiate(cameraPrefab, handTransform);
+        equippedCamera = Instantiate(cameraPrefab, handPosition);
         equippedCamera.transform.localPosition = Vector3.zero;
         equippedCamera.transform.localRotation = Quaternion.identity;
         equippedCamera.SetActive(true);
+        photographer.enabled = true;
     }
-
-    //Esta funcion se llamaria al presionar la tecla correspondiente de slot de inventario
-    public void SetHasCamera(bool hasCam = true)
+    public override void OnUnequip()
     {
-        HasCamera = hasCam;
+        photographer.enabled = false;
     }
 }

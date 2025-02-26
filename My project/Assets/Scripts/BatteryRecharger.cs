@@ -4,6 +4,7 @@ using UnityEngine;
 public class BatteryRecharger : MonoBehaviour, IInteractable
 {
     [SerializeField] float timeToRecharge = 10f;
+    [SerializeField] ObjectIdentifier objectIdentifier;
     Inventory inventory;
     private Coroutine rechargeBatteryCoroutine;
 
@@ -17,14 +18,15 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         GrabbableObject objectToRecharg = inventory.GetEquippedItem();
         if (objectToRecharg == null) return;
 
-        CameraController cameraController = FindFirstObjectByType<CameraController>();
-        if (cameraController == null) return;
+        //CameraController cameraController = FindFirstObjectByType<CameraController>();
+        //if (cameraController == null) return;
+        Rechargeable rechargeableObj = objectToRecharg.gameObject.GetComponent<Rechargeable>();
 
         if (rechargeBatteryCoroutine != null)
         {
             StopCoroutine(rechargeBatteryCoroutine);
         }
-        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(cameraController));
+        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(rechargeableObj));
     }
 
     private IEnumerator RechargeBattery(Rechargeable rechargableObj)
@@ -37,5 +39,15 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         }
         rechargableObj.RechargeBattery(rechargableObj.MaxBatteryPercentage);
         rechargeBatteryCoroutine = null;
+    }
+
+    public void PlaceItemOnRecharger(Rechargeable rechargeableObj)
+    {
+        
+    }
+
+    public ObjectIdentifier GetIdenfier()
+    {
+        return objectIdentifier;
     }
 }

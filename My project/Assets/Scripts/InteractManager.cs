@@ -24,7 +24,8 @@ public class InteractManager : MonoBehaviour
         {
             if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
-                ShowInteractUI();
+                interactCanvas.transform.position = Camera.main.WorldToScreenPoint(hit.point + Vector3.up * 0.5f);
+                ShowInteractUI(interactable);
                 return;
             }
         }
@@ -42,26 +43,21 @@ public class InteractManager : MonoBehaviour
         }
     }
 
-    private void ShowInteractUI()
+    private void ShowInteractUI(IInteractable interactable)
     {
-        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, interactDistance, interactableLayer))
+        var objectIdentifier = interactable.GetIdenfier();
+        interactCanvas.alpha = 1;
+        if (objectIdentifier != null)
         {
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
-            {
-                interactCanvas.alpha = 1;
-                if (hit.collider.TryGetComponent(out ObjectIdentifier objectIdentifier))
-                {
-                    interactText.text = objectIdentifier.ObjectName;
-                    interactAction.text = objectIdentifier.ObjectAction;
-                }
-                else
-                {
-                    interactText.text = "";
-                    interactAction.text = "";
-                }
-                interactCanvas.transform.position = Camera.main.WorldToScreenPoint(hit.point + Vector3.up * 0.5f);
-                return;
-            }
+            interactText.text = objectIdentifier.ObjectName;
+            interactAction.text = objectIdentifier.ObjectAction;
         }
+        else
+        {
+            interactText.text = "";
+            interactAction.text = "";
+        }
+        
+        return;
     }
 }

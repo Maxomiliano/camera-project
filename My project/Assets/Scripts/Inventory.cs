@@ -5,7 +5,9 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private int maxSlots = 3;
     private List<GrabbableObject> items = new List<GrabbableObject>();
-    GrabbableObject equipedItem;
+    private GrabbableObject equipedItem;
+
+    public GrabbableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
 
     public bool AddItem(GrabbableObject item)
     {
@@ -52,14 +54,33 @@ public class Inventory : MonoBehaviour
         return equipedItem;
     }
 
-    public void EquipItem(GrabbableObject item)
+    public void EquipItem(GrabbableObject item, Transform handPosition)
     {
+        if (EquipedItem != null)
+        {
+            EquipedItem.OnUnequip();
+        }
         if (item == null)
         {
             Debug.LogError("Intentaste equipar un objeto nulo.");
             return;
         }
         equipedItem = item;
+        if (EquipedItem != null)
+        {
+            equipedItem.OnEquip(handPosition);
+        }
         Debug.Log($"Objeto equipado: {equipedItem.name}");
+    }
+
+    //Drop equipped item
+    public void UnequipItem(GrabbableObject item)
+    {
+        equipedItem = null;
+    }
+
+    public void ReEquipItem(GrabbableObject item)
+    {
+        
     }
 }

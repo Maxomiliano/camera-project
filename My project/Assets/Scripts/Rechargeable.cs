@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public abstract class Rechargeable : MonoBehaviour
+public class Rechargeable : MonoBehaviour
 {
     [SerializeField] protected float maxBatteryPercentage = 100f;
     [SerializeField] protected float currentBatteryPercentage;
 
     public float CurrentBatteryPercentage => currentBatteryPercentage;
-    public float MaxBatteryPercentage  => maxBatteryPercentage;
+    public float MaxBatteryPercentage => maxBatteryPercentage;
 
     public virtual void RechargeBattery(float ammount)
     {
@@ -16,15 +16,14 @@ public abstract class Rechargeable : MonoBehaviour
     public virtual void DecreaseBattery(float ammount)
     {
         currentBatteryPercentage = Mathf.Max(currentBatteryPercentage - ammount, 0f);
+
+        if (currentBatteryPercentage <= 0)
         {
-            if (currentBatteryPercentage <= 0)
-            {
-                Debug.Log("You have to recharge the battery");
-            }
-            else 
-            {
-                Debug.Log($"Battery decreased by {ammount}");
-            }
+            Debug.Log("You have to recharge the battery");
+        }
+        else
+        {
+            Debug.Log($"Battery decreased by {ammount}");
         }
     }
 }
