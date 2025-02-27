@@ -45,7 +45,7 @@ public class InteractManager : MonoBehaviour
 
     private void ShowInteractUI(IInteractable interactable)
     {
-        var objectIdentifier = interactable.GetIdenfier();
+        ObjectIdentifier objectIdentifier = interactable.GetIdenfier();
         interactCanvas.alpha = 1;
         if (objectIdentifier != null)
         {
@@ -57,7 +57,6 @@ public class InteractManager : MonoBehaviour
             interactText.text = "";
             interactAction.text = "";
         }
-        
         return;
     }
 }

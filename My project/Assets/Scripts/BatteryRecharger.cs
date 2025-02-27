@@ -5,6 +5,7 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 {
     [SerializeField] float timeToRecharge = 10f;
     [SerializeField] ObjectIdentifier objectIdentifier;
+    [SerializeField] Transform rechargPlace; 
     Inventory inventory;
     private Coroutine rechargeBatteryCoroutine;
 
@@ -18,10 +19,13 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         GrabbableObject objectToRecharg = inventory.GetEquippedItem();
         if (objectToRecharg == null) return;
 
-        //CameraController cameraController = FindFirstObjectByType<CameraController>();
-        //if (cameraController == null) return;
         Rechargeable rechargeableObj = objectToRecharg.gameObject.GetComponent<Rechargeable>();
+        if(rechargeableObj == null) return;
 
+
+        inventory.UnequipItem();
+        objectToRecharg.transform.SetParent(rechargPlace);
+        objectToRecharg.transform.localPosition = Vector3.zero;
         if (rechargeBatteryCoroutine != null)
         {
             StopCoroutine(rechargeBatteryCoroutine);

@@ -13,23 +13,23 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     {
         Inventory inventory = FindFirstObjectByType<Inventory>();
         if (inventory != null && inventory.AddItem(this))
-        { 
-            gameObject.SetActive(false);
+        {
+            //gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
     //Funcion para equipar el objeto en Hand
+    //Parametros: HandTransform, 
+    //returns: el objeto ya equipado
     public virtual void OnEquip(Transform handPosition)
     {
-        
+
     }
     public virtual void OnUnequip()
     {
 
     }
-
-    //Parametros: HandTransform, 
-    //returns: el objeto ya equipado
 
 
     //Funcion para activar la funcionalidad el objeto cuando esté equipado
@@ -49,6 +49,4 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     {
 
     }
-
-    //O crear clase o interfaz que sea UsableObject que
 }

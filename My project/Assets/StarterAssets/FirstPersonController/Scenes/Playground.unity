@@ -1330,6 +1330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToRecharge: 10
   objectIdentifier: {fileID: 1268152294}
+  rechargPlace: {fileID: 1633455355}
 --- !u!114 &1268152294
 MonoBehaviour:
   m_ObjectHideFlags: 0

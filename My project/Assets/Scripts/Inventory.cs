@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour
 
     public GrabbableObject GetEquippedItem()
     {
-        return equipedItem;
+        return EquipedItem;
     }
 
     public void EquipItem(GrabbableObject item, Transform handPosition)
@@ -74,13 +74,19 @@ public class Inventory : MonoBehaviour
     }
 
     //Drop equipped item
-    public void UnequipItem(GrabbableObject item)
+    public void UnequipItem()
     {
-        equipedItem = null;
+        if (EquipedItem != null)
+        {
+            Destroy(EquipedItem.gameObject);
+            EquipedItem = null;
+        }
     }
 
+    /*
     public void ReEquipItem(GrabbableObject item)
     {
         
     }
+    */
 }
