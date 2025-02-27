@@ -4,12 +4,12 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int maxSlots = 3;
-    private List<EquippableObject> items = new List<EquippableObject>();
+    private List<ItemDataSO> items = new List<ItemDataSO>();
     private EquippableObject equipedItem;
 
     public EquippableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
 
-    public bool AddItem(EquippableObject item)
+    public bool AddItem(ItemDataSO item)
     {
         if (items.Count >= maxSlots)
         {
@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public void RemoveItem(EquippableObject item) 
+    public void RemoveItem(ItemDataSO item) 
     {
         if (items.Contains(item))
         {
@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public EquippableObject GetItem(int index)
+    public ItemDataSO GetItem(int index)
     {
         if (index >= 0 && index < items.Count)
         {
@@ -39,12 +39,12 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public bool Contains(EquippableObject item)
+    public bool Contains(ItemDataSO item)
     {
         return items.Contains(item);
     }
 
-    public List<EquippableObject> GetAllItems()
+    public List<ItemDataSO> GetAllItems()
     {
         return items;
     }
@@ -54,18 +54,23 @@ public class Inventory : MonoBehaviour
         return EquipedItem;
     }
 
-    public void EquipItem(EquippableObject item, Transform handPosition)
+    public void EquipItem(ItemDataSO item, Transform handPosition)
     {
         if (EquipedItem != null)
         {
             EquipedItem.OnUnequip();
+            Destroy(EquipedItem.gameObject);
         }
-        if (item == null)
+        if (item == null || item.prebaf == null)
         {
-            Debug.LogError("Intentaste equipar un objeto nulo.");
+            Debug.LogError("Intentaste equipar un objeto nulo o sin prefab.");
             return;
         }
-        equipedItem = item;
+        GameObject obj = Instantiate(item.prebaf, handPosition);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        equipedItem = obj.GetComponent<EquippableObject>();
+
         if (EquipedItem != null)
         {
             equipedItem.OnEquip(handPosition);
@@ -82,11 +87,4 @@ public class Inventory : MonoBehaviour
             EquipedItem = null;
         }
     }
-
-    /*
-    public void ReEquipItem(GrabbableObject item)
-    {
-        
-    }
-    */
 }

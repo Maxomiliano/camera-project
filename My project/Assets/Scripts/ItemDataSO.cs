@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemDataSO : ScriptableObject
 {
     //public Sprite icon;
-   public string itemName;
-   public GameObject prebaf;
+    public string itemName;
+    public string itemAction;
+    public GameObject prebaf;
 }

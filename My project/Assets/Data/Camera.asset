@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Camera
   m_EditorClassIdentifier: 
   itemName: Camera
-  prebaf: {fileID: 0}
+  itemAction: (E) Grab
+  prebaf: {fileID: 7661324786262302195, guid: a773856f9d9cfef4a800236d4daad973, type: 3}
