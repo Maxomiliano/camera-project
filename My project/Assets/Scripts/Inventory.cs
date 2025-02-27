@@ -4,12 +4,12 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int maxSlots = 3;
-    private List<GrabbableObject> items = new List<GrabbableObject>();
-    private GrabbableObject equipedItem;
+    private List<EquippableObject> items = new List<EquippableObject>();
+    private EquippableObject equipedItem;
 
-    public GrabbableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
+    public EquippableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
 
-    public bool AddItem(GrabbableObject item)
+    public bool AddItem(EquippableObject item)
     {
         if (items.Count >= maxSlots)
         {
@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public void RemoveItem(GrabbableObject item) 
+    public void RemoveItem(EquippableObject item) 
     {
         if (items.Contains(item))
         {
@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public GrabbableObject GetItem(int index)
+    public EquippableObject GetItem(int index)
     {
         if (index >= 0 && index < items.Count)
         {
@@ -39,22 +39,22 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public bool Contains(GrabbableObject item)
+    public bool Contains(EquippableObject item)
     {
         return items.Contains(item);
     }
 
-    public List<GrabbableObject> GetAllItems()
+    public List<EquippableObject> GetAllItems()
     {
         return items;
     }
 
-    public GrabbableObject GetEquippedItem()
+    public EquippableObject GetEquippedItem()
     {
         return EquipedItem;
     }
 
-    public void EquipItem(GrabbableObject item, Transform handPosition)
+    public void EquipItem(EquippableObject item, Transform handPosition)
     {
         if (EquipedItem != null)
         {

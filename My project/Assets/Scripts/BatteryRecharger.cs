@@ -16,7 +16,7 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        GrabbableObject objectToRecharg = inventory.GetEquippedItem();
+        EquippableObject objectToRecharg = inventory.GetEquippedItem();
         if (objectToRecharg == null) return;
 
         Rechargeable rechargeableObj = objectToRecharg.gameObject.GetComponent<Rechargeable>();

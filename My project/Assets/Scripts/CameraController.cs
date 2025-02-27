@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : GrabbableObject
+public class CameraController : EquippableObject
 {
     [SerializeField] Photographer photographer;
     [SerializeField] Inventory inventory;

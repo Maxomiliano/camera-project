@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            GrabbableObject obj = inventory.GetItem(0);
+            EquippableObject obj = inventory.GetItem(0);
             if (obj != null)
             {
                 inventory.EquipItem(obj, handPosition);
