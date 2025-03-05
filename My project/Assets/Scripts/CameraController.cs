@@ -5,22 +5,20 @@ using UnityEngine.InputSystem;
 
 public class CameraController : EquippableObject
 {
-    [SerializeField] Photographer photographer;
-    //[SerializeField] Inventory inventory;
     [SerializeField] GameObject cameraPrefab;
-    [SerializeField] GameObject playerFollowCamera;
     [SerializeField] Rechargeable rechargeable;
+
+    private Photographer photographer;
+    private GameObject playerFollowCamera;
 
     private GameObject equippedCamera;
     private bool m_isAiming;
 
     public Rechargeable Rechargeable { get => rechargeable; }
 
-    private void OnEnable()
+    private void Awake()
     {
-        photographer = FindFirstObjectByType<Photographer>();
-        //inventory = FindFirstObjectByType<Inventory>();
-        playerFollowCamera = GameObject.Find("PlayerFollowCamera");
+        Initialize();
     }
 
     private void Start()
@@ -33,9 +31,10 @@ public class CameraController : EquippableObject
         Photographer.OnScreenshotTaken -= rechargeable.DecreaseBattery;
     }
 
-    public void Initialize()
+    private void Initialize()
     {
-        
+        photographer = FindFirstObjectByType<Photographer>();
+        playerFollowCamera = GameObject.Find("PlayerFollowCamera");
     }
 
     public override void PrepareObject()
