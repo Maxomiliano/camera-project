@@ -80,7 +80,8 @@ namespace StarterAssets
 		
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
+			//SetCursorState(cursorLocked);
+			Cursor.visible = true;
 		}
 
 		private void SetCursorState(bool newState)

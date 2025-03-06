@@ -2993,6 +2993,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174741426713228341, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7054430726966452648, guid: 2ffcfb0d670244941a62ddcfc3f3ff9d, type: 3}
       propertyPath: m_Name
       value: InventorySlot
