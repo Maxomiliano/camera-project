@@ -1,30 +1,39 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public ItemDataSO item;
+
 
     [Header("UI")]
-    public Image _image;
+    public Image image;
+    public TMP_Text countText;
 
-    [HideInInspector] public Transform parentAfterDrag;
+    [HideInInspector] public ItemDataSO _item;
+    [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
+    [HideInInspector] public Transform _parentAfterDrag;
 
-    private void Start()
-    {
-        Initialize(item);
-    }
 
     public void Initialize(ItemDataSO newItem)
     {
-        _image.sprite = newItem.icon;
+        _item = newItem;
+        image.sprite = newItem.icon;
+        RefreshCount();
+    }
+
+    public void RefreshCount()
+    {
+        countText.text = _count.ToString();
+        bool textActive = _count > 1;
+        countText.gameObject.SetActive(textActive);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _image.raycastTarget = false;
-        parentAfterDrag = transform.parent;
+        image.raycastTarget = false;
+        _parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
     }
 
@@ -35,7 +44,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _image.raycastTarget = true;
-        transform.SetParent(parentAfterDrag);
+        image.raycastTarget = true;
+        transform.SetParent(_parentAfterDrag);
     }
 }

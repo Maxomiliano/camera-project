@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class GrabbableObject : EquippableObject, IInteractable
+public class GrabbableObject : EquippableObject //IInteractable
 {
     [SerializeField] ObjectIdentifier objectIdentifier;
     [SerializeField] ItemDataSO itemData;
 
+    /*
     public void Interact()
     {
         Inventory inventory = FindFirstObjectByType<Inventory>();
@@ -13,6 +14,7 @@ public class GrabbableObject : EquippableObject, IInteractable
             Destroy(gameObject);
         }
     }
+    */
     public ObjectIdentifier GetIdenfier()
     {
         return objectIdentifier;
