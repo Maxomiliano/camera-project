@@ -11,8 +11,9 @@ public class Inventory : MonoBehaviour
     public Transform handPosition;
 
     private List<ItemDataSO> items = new List<ItemDataSO>();
+    private int selectedSlot = 0;
+
     private EquippableObject equipedItem;
-    private int selectedSlot = -1;
     public EquippableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
 
 
@@ -78,13 +79,14 @@ public class Inventory : MonoBehaviour
             if (itemSlot == null) //Acá checkeo que el slot esté vacío, es decir que no tiene un item
             {
                 SpawnNewItem(item, slot);
+                ChangeSelectedSlot(i);
                 return true;
             }
         }
         return false;
     }
 
-    void SpawnNewItem(ItemDataSO item, InventorySlot slot)
+    private void SpawnNewItem(ItemDataSO item, InventorySlot slot)
     {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
@@ -121,13 +123,21 @@ public class Inventory : MonoBehaviour
     {
         if (EquipedItem != null)
         {
+            /*
             EquipedItem.OnUnequip();
             Destroy(EquipedItem.gameObject);
+            EquipedItem = null;
+            */
+            UnequipItem();
         }
 
-        if (item == null || item.prebaf == null)
+        if (item == null)
         {
-            Debug.LogError("Intentaste equipar un objeto nulo o sin prefab.");
+            return;
+        }
+        if (item.prebaf == null)
+        {
+            Debug.LogError("Intentaste equipar un objeto sin prefab.");
             return;
         }
 
@@ -164,22 +174,10 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-
-    public bool Contains(ItemDataSO item)
-    {
-        return items.Contains(item);
-    }
-
-    public List<ItemDataSO> GetAllItems()
-    {
-        return items;
-    }
-
     public EquippableObject GetEquippedItem()
     {
         return EquipedItem;
     }
-
 
     //Drop equipped item
     public void UnequipItem()
