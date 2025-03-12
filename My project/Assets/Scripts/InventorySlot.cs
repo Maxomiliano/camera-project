@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -29,6 +30,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         {
             InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
             inventoryItem._parentAfterDrag = transform;
+
+            // Verificar si el slot seleccionado está vacío y equipar el item
+            if (Inventory.Instance.SelectedSlot == Array.IndexOf(Inventory.Instance.inventorySlots, this))
+            {
+                Inventory.Instance.ShowItemInHand(inventoryItem._item, Inventory.Instance.handPosition);
+            }
         }
     }
 }

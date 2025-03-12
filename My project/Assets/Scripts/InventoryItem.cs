@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,5 +47,15 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.raycastTarget = true;
         transform.SetParent(_parentAfterDrag);
+
+        // Verificar si el slot de origen estaba seleccionado y está vacío
+        InventorySlot originalSlot = _parentAfterDrag.GetComponent<InventorySlot>();
+        if (originalSlot != null && 
+            Inventory.Instance.SelectedSlot !=
+            Array.IndexOf(Inventory.Instance.inventorySlots, originalSlot) &&
+            originalSlot.transform.childCount == 1)
+        {
+            Inventory.Instance.UnequipItem();
+        }
     }
 }

@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
 
     private EquippableObject equipedItem;
     public EquippableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
-
+    public int SelectedSlot { get => selectedSlot; set => selectedSlot = value; }
 
     private void Awake()
     {
