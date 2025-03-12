@@ -138,10 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b51b23f3a52df84dac104d3f1b591a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photographer: {fileID: 0}
-  inventory: {fileID: 0}
   cameraPrefab: {fileID: 7661324786262302195}
-  playerFollowCamera: {fileID: 0}
   rechargeable: {fileID: 8657037044905215342}
 --- !u!114 &8657037044905215342
 MonoBehaviour:
@@ -156,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBatteryPercentage: 100
-  currentBatteryPercentage: 0
+  currentBatteryPercentage: 100
 --- !u!114 &6350431374375383873
 MonoBehaviour:
   m_ObjectHideFlags: 0

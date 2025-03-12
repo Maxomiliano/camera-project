@@ -9,14 +9,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ItemDataSO obj = inventory.GetItem(0);
             if (obj != null)
             {
-                inventory.EquipItem(obj, handPosition);
+                inventory.ShowItemInHand(obj, handPosition);
             }
         }
+        */
+        
+      
         if (inventory.EquipedItem != null)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)

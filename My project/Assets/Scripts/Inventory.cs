@@ -3,14 +3,23 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory Instance;
+
     public int maxStackItems = 10;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
+    public Transform handPosition;
+
     private List<ItemDataSO> items = new List<ItemDataSO>();
     private EquippableObject equipedItem;
     private int selectedSlot = -1;
     public EquippableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
 
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -19,37 +28,14 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeSelectedSlot(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeSelectedSlot(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeSelectedSlot(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ChangeSelectedSlot(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ChangeSelectedSlot(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            ChangeSelectedSlot(5);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ChangeSelectedSlot(6);
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeSelectedSlot(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeSelectedSlot(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeSelectedSlot(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeSelectedSlot(3);
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) ChangeSelectedSlot(4);
+        else if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeSelectedSlot(5);
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) ChangeSelectedSlot(6);
     }
-
-
 
     private void ChangeSelectedSlot(int newValue) //La variable newvalue diria qué slot es el nuevo
     {
@@ -59,8 +45,17 @@ public class Inventory : MonoBehaviour
         }
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
-    }
 
+        InventoryItem inventoryItem = inventorySlots[newValue].GetComponentInChildren<InventoryItem>();
+        if (inventoryItem != null)
+        {
+            ShowItemInHand(inventoryItem._item, handPosition);
+        }
+        else
+        {
+            ShowItemInHand(null, handPosition);
+        }
+    }
 
     public bool AddItem(ItemDataSO item)
     {
@@ -98,7 +93,7 @@ public class Inventory : MonoBehaviour
 
     //Si USE es verdadero entonces deberiamos deshacernos de este objeto o desincrementar su count
     //El bool USE seria para spawnear items por fuera del inventario. Ver significado.
-    public ItemDataSO GetSelectedItem(bool use) 
+    public ItemDataSO GetSelectedItem(bool use)
     {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
@@ -122,6 +117,34 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
+    public void ShowItemInHand(ItemDataSO item, Transform handPosition)
+    {
+        if (EquipedItem != null)
+        {
+            EquipedItem.OnUnequip();
+            Destroy(EquipedItem.gameObject);
+        }
+
+        if (item == null || item.prebaf == null)
+        {
+            Debug.LogError("Intentaste equipar un objeto nulo o sin prefab.");
+            return;
+        }
+
+        GameObject obj = Instantiate(item.prebaf, handPosition);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        equipedItem = obj.GetComponent<EquippableObject>();
+
+        if (EquipedItem != null)
+        {
+            equipedItem.OnEquip(handPosition);
+        }
+        Debug.Log($"Objeto equipado: {equipedItem.name}");
+    }
+
+
+
     public void RemoveItem(ItemDataSO item)
     {
         if (items.Contains(item))
@@ -131,6 +154,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+
     public ItemDataSO GetItem(int index)
     {
         if (index >= 0 && index < items.Count)
@@ -139,6 +163,7 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+
 
     public bool Contains(ItemDataSO item)
     {
@@ -155,29 +180,6 @@ public class Inventory : MonoBehaviour
         return EquipedItem;
     }
 
-    public void EquipItem(ItemDataSO item, Transform handPosition)
-    {
-        if (EquipedItem != null)
-        {
-            EquipedItem.OnUnequip();
-            Destroy(EquipedItem.gameObject);
-        }
-        if (item == null || item.prebaf == null)
-        {
-            Debug.LogError("Intentaste equipar un objeto nulo o sin prefab.");
-            return;
-        }
-        GameObject obj = Instantiate(item.prebaf, handPosition);
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localRotation = Quaternion.identity;
-        equipedItem = obj.GetComponent<EquippableObject>();
-
-        if (EquipedItem != null)
-        {
-            equipedItem.OnEquip(handPosition);
-        }
-        Debug.Log($"Objeto equipado: {equipedItem.name}");
-    }
 
     //Drop equipped item
     public void UnequipItem()

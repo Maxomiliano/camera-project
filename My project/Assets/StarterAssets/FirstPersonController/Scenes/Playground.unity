@@ -1425,6 +1425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ef4b74042c554448a7839d97f04585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1619210364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1986939969150351257, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+  m_PrefabInstance: {fileID: 5393215579111688471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1630298814 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8179298520138682489, guid: 1d072db547b499a4b98ea27b4bd23386, type: 3}
@@ -2728,6 +2733,10 @@ PrefabInstance:
       propertyPath: _photoPreview
       value: 
       objectReference: {fileID: 1455747583}
+    - target: {fileID: 1952779480988521036, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: handPosition
+      value: 
+      objectReference: {fileID: 1619210364}
     - target: {fileID: 1952779480988521036, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: inventoryItemPrefab
       value: 
