@@ -59,6 +59,7 @@ public class CameraController : EquippableObject
         }
     }
 
+    /*
     public override void OnEquip(Transform handPosition)
     {
         if (equippedCamera != null) Destroy(equippedCamera);
@@ -69,6 +70,8 @@ public class CameraController : EquippableObject
         equippedCamera.SetActive(true);
         photographer.enabled = true;
     }
+    */
+    
     public override void OnUnequip()
     {
         photographer.enabled = false;

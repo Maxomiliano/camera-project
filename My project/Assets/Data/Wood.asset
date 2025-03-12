@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 967e6706843f8ee499d8477a5d1303e6, type: 3}
   itemName: Wood
   itemAction: (E) Grab
-  prebaf: {fileID: 0}
+  prebaf: {fileID: 8047313728277799838, guid: 91d2b5b3e692b124797ecd2d6fbd47ea, type: 3}
   type: 0
   actionType: 0
   stackable: 1

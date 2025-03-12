@@ -79,7 +79,14 @@ public class Inventory : MonoBehaviour
             if (itemSlot == null) //Acá checkeo que el slot esté vacío, es decir que no tiene un item
             {
                 SpawnNewItem(item, slot);
-                ChangeSelectedSlot(i);
+                if (inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>() == null)
+                { 
+                    ChangeSelectedSlot(i);
+                }
+                if (selectedSlot == i)
+                {
+                    ShowItemInHand(item, handPosition);
+                }
                 return true;
             }
         }
@@ -121,15 +128,7 @@ public class Inventory : MonoBehaviour
 
     public void ShowItemInHand(ItemDataSO item, Transform handPosition)
     {
-        if (EquipedItem != null)
-        {
-            /*
-            EquipedItem.OnUnequip();
-            Destroy(EquipedItem.gameObject);
-            EquipedItem = null;
-            */
-            UnequipItem();
-        }
+        UnequipItem();
 
         if (item == null)
         {
@@ -137,11 +136,13 @@ public class Inventory : MonoBehaviour
         }
         if (item.prebaf == null)
         {
+            UnequipItem();
             Debug.LogError("Intentaste equipar un objeto sin prefab.");
             return;
         }
 
         GameObject obj = Instantiate(item.prebaf, handPosition);
+        Debug.Log($"Objeto instanciado: {obj.name}, Parent: {obj.transform.parent?.name}");
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
         equipedItem = obj.GetComponent<EquippableObject>();
@@ -179,13 +180,17 @@ public class Inventory : MonoBehaviour
         return EquipedItem;
     }
 
-    //Drop equipped item
     public void UnequipItem()
     {
         if (EquipedItem != null)
         {
             Destroy(EquipedItem.gameObject);
             EquipedItem = null;
+            Debug.Log("Objeto en la mano eliminado correctamente.");
+        }
+        else
+        {
+            Debug.Log("No había objeto equipado para eliminar.");
         }
     }
 }
