@@ -14,6 +14,8 @@ public class CameraController : EquippableObject
     private GameObject equippedCamera;
     private bool m_isAiming;
 
+    public float Sensivity = 2f;
+
     public Rechargeable Rechargeable { get => rechargeable; }
 
     private void Awake()
