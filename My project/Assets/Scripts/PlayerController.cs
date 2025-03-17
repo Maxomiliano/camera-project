@@ -1,3 +1,4 @@
+using StarterAssets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,8 @@ public class PlayerController : MonoBehaviour
 
 
     private void Update()
-    {      
+    {
+        CheckIfUIActive();
         if (inventory.EquipedItem != null)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -24,6 +26,19 @@ public class PlayerController : MonoBehaviour
             {
                 inventory.EquipedItem.UnprepareObject();
             }
+        }
+
+    }
+
+    private void CheckIfUIActive()
+    {
+        if (UIManager.Instance.IsAnyPanelOpen())
+        {
+            GetComponent<FirstPersonController>().enabled = false;
+        }
+        else
+        {
+            GetComponent<FirstPersonController>().enabled = true;
         }
     }
 }

@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 
     private bool _anyPanelOpen = false;
 
-    public bool AnyPanelOpen { get => _anyPanelOpen; set => _anyPanelOpen = value; }
+    public bool AnyPanelOpen { get => _anyPanelOpen; }
 
     private void Awake()
     {
@@ -48,10 +48,10 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = _anyPanelOpen ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
-    /*
-    public bool AnyPanelOpen()
+    
+    public bool IsAnyPanelOpen()
     {
         return _inventoryPanel.activeSelf;
     }
-    */
+    
 }
