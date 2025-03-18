@@ -19,18 +19,26 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         ToolbarItem objectToRecharg = inventory.GetSelectedItem();
         if (objectToRecharg == null) return;
 
-        Rechargeable rechargeableObj = objectToRecharg.gameObject.GetComponent<Rechargeable>();
-        if(rechargeableObj == null) return;
+        //Rechargeable rechargeableObj = objectToRecharg.gameObject.GetComponent<Rechargeable>();
+        //if(rechargeableObj == null) return;
+
+        GrabbableObject grabbableObj = objectToRecharg.gameObject.GetComponent<GrabbableObject>();
+        if (grabbableObj == null) return;
+
+        ItemDataSO itemData = grabbableObj.ItemData;
+        if (itemData == null) return;
 
 
+        inventory.RemoveItem(itemData);
         inventory.DeselectItem();
-        objectToRecharg.transform.SetParent(rechargPlace);
-        objectToRecharg.transform.localPosition = Vector3.zero;
+        GameObject rechargeableInstance = Instantiate(itemData.prebaf, rechargPlace);
+        Rechargeable newRecargeable = rechargeableInstance.GetComponent<Rechargeable>();
+
         if (rechargeBatteryCoroutine != null)
         {
             StopCoroutine(rechargeBatteryCoroutine);
         }
-        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(rechargeableObj));
+        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(newRecargeable));
     }
 
     private IEnumerator RechargeBattery(Rechargeable rechargableObj)

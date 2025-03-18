@@ -5,7 +5,8 @@ public class GrabbableObject : ToolbarItem, IInteractable
     [SerializeField] ObjectIdentifier objectIdentifier;
     [SerializeField] ItemDataSO itemData;
 
-    
+    public ItemDataSO ItemData { get => itemData; }
+
     public void Interact()
     {
         Inventory inventory = FindFirstObjectByType<Inventory>();

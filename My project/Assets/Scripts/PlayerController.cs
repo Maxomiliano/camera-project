@@ -11,20 +11,20 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckIfUIActive();
-        if (inventory.EquipedItem != null)
+        if (inventory.ToolbarItem != null)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                inventory.EquipedItem.OnPrimaryUse();
+                inventory.ToolbarItem.OnPrimaryUse();
             }
 
             if (Mouse.current.rightButton.isPressed)
             {
-                inventory.EquipedItem.OnSecondaryUse();
+                inventory.ToolbarItem.OnSecondaryUse();
             }
             else
             {
-                inventory.EquipedItem.OnSecondaryRelease();
+                inventory.ToolbarItem.OnSecondaryRelease();
             }
         }
 

@@ -13,8 +13,8 @@ public class Inventory : MonoBehaviour
     private List<ItemDataSO> items = new List<ItemDataSO>();
     private int selectedSlot = 0;
 
-    private ToolbarItem equipedItem;
-    public ToolbarItem EquipedItem { get => equipedItem; set => equipedItem = value; }
+    private ToolbarItem toolbarItem;
+    public ToolbarItem ToolbarItem { get => toolbarItem; set => toolbarItem = value; }
     public int SelectedSlot { get => selectedSlot; set => selectedSlot = value; }
 
     private void Awake()
@@ -80,7 +80,7 @@ public class Inventory : MonoBehaviour
             {
                 SpawnNewItem(item, slot);
                 if (inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>() == null)
-                { 
+                {
                     ChangeSelectedSlot(i);
                 }
                 if (selectedSlot == i)
@@ -145,24 +145,31 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Objeto instanciado: {obj.name}, Parent: {obj.transform.parent?.name}");
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
-        equipedItem = obj.GetComponent<ToolbarItem>();
+        toolbarItem = obj.GetComponent<ToolbarItem>();
 
-        if (EquipedItem != null)
+        if (ToolbarItem != null)
         {
-            equipedItem.OnToolbarSelected(handPosition);
+            toolbarItem.OnToolbarSelected(handPosition);
         }
-        Debug.Log($"Objeto equipado: {equipedItem.name}");
+        Debug.Log($"Objeto equipado: {toolbarItem.name}");
     }
 
 
 
-    public void RemoveItem(ItemDataSO item)
+    public bool RemoveItem(ItemDataSO item)
     {
-        if (items.Contains(item))
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            items.Remove(item);
-            Debug.Log($"Objeto {item.name} quitado del inventario");
+            InventorySlot slot = inventorySlots[i];  //Variable del slot
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>(); //Variable del item que estaría en el slot
+            if (itemInSlot != null && itemInSlot._item == item && itemInSlot._count > 0) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
+            {
+                itemInSlot._count--;
+                itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
+                return true;
+            }
         }
+        return false;
     }
 
 
@@ -177,15 +184,15 @@ public class Inventory : MonoBehaviour
 
     public ToolbarItem GetSelectedItem()
     {
-        return EquipedItem;
+        return ToolbarItem;
     }
 
     public void DeselectItem()
     {
-        if (EquipedItem != null)
+        if (ToolbarItem != null)
         {
-            Destroy(EquipedItem.gameObject);
-            EquipedItem = null;
+            Destroy(ToolbarItem.gameObject);
+            ToolbarItem = null;
             Debug.Log("Objeto en la mano eliminado correctamente.");
         }
         else
