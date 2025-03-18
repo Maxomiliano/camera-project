@@ -13,8 +13,8 @@ public class Inventory : MonoBehaviour
     private List<ItemDataSO> items = new List<ItemDataSO>();
     private int selectedSlot = 0;
 
-    private EquippableObject equipedItem;
-    public EquippableObject EquipedItem { get => equipedItem; set => equipedItem = value; }
+    private ToolbarItem equipedItem;
+    public ToolbarItem EquipedItem { get => equipedItem; set => equipedItem = value; }
     public int SelectedSlot { get => selectedSlot; set => selectedSlot = value; }
 
     private void Awake()
@@ -128,7 +128,7 @@ public class Inventory : MonoBehaviour
 
     public void ShowItemInHand(ItemDataSO item, Transform handPosition)
     {
-        UnequipItem();
+        DeselectItem();
 
         if (item == null)
         {
@@ -136,7 +136,7 @@ public class Inventory : MonoBehaviour
         }
         if (item.prebaf == null)
         {
-            UnequipItem();
+            DeselectItem();
             Debug.LogError("Intentaste equipar un objeto sin prefab.");
             return;
         }
@@ -145,11 +145,11 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Objeto instanciado: {obj.name}, Parent: {obj.transform.parent?.name}");
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
-        equipedItem = obj.GetComponent<EquippableObject>();
+        equipedItem = obj.GetComponent<ToolbarItem>();
 
         if (EquipedItem != null)
         {
-            equipedItem.OnEquip(handPosition);
+            equipedItem.OnToolbarSelected(handPosition);
         }
         Debug.Log($"Objeto equipado: {equipedItem.name}");
     }
@@ -175,12 +175,12 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public EquippableObject GetEquippedItem()
+    public ToolbarItem GetSelectedItem()
     {
         return EquipedItem;
     }
 
-    public void UnequipItem()
+    public void DeselectItem()
     {
         if (EquipedItem != null)
         {

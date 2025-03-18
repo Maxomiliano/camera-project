@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : EquippableObject
+public class CameraController : ToolbarItem
 {
     [SerializeField] GameObject cameraPrefab;
     [SerializeField] Rechargeable rechargeable;
@@ -39,21 +39,21 @@ public class CameraController : EquippableObject
         playerFollowCamera = GameObject.Find("PlayerFollowCamera");
     }
 
-    public override void PrepareObject()
+    public override void OnSecondaryUse()
     {
         //Animacion de camara
         m_isAiming = true;
         playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
     }
 
-    public override void UnprepareObject()
+    public override void OnSecondaryRelease()
     {
         //Animacion de camara
         m_isAiming = false;
         playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
     }
 
-    public override void UseObject()
+    public override void OnPrimaryUse()
     {
         if (m_isAiming && Rechargeable.CurrentBatteryPercentage > 0)
         { 
@@ -74,7 +74,7 @@ public class CameraController : EquippableObject
     }
     */
     
-    public override void OnUnequip()
+    public override void OnToolbarDeselected()
     {
         photographer.enabled = false;
     }

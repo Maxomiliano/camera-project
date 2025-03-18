@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GrabbableObject : EquippableObject, IInteractable
+public class GrabbableObject : ToolbarItem, IInteractable
 {
     [SerializeField] ObjectIdentifier objectIdentifier;
     [SerializeField] ItemDataSO itemData;

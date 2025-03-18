@@ -16,14 +16,14 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        EquippableObject objectToRecharg = inventory.GetEquippedItem();
+        ToolbarItem objectToRecharg = inventory.GetSelectedItem();
         if (objectToRecharg == null) return;
 
         Rechargeable rechargeableObj = objectToRecharg.gameObject.GetComponent<Rechargeable>();
         if(rechargeableObj == null) return;
 
 
-        inventory.UnequipItem();
+        inventory.DeselectItem();
         objectToRecharg.transform.SetParent(rechargPlace);
         objectToRecharg.transform.localPosition = Vector3.zero;
         if (rechargeBatteryCoroutine != null)

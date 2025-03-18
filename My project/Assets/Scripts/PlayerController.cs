@@ -15,16 +15,16 @@ public class PlayerController : MonoBehaviour
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                inventory.EquipedItem.UseObject();
+                inventory.EquipedItem.OnPrimaryUse();
             }
 
             if (Mouse.current.rightButton.isPressed)
             {
-                inventory.EquipedItem.PrepareObject();
+                inventory.EquipedItem.OnSecondaryUse();
             }
             else
             {
-                inventory.EquipedItem.UnprepareObject();
+                inventory.EquipedItem.OnSecondaryRelease();
             }
         }
 

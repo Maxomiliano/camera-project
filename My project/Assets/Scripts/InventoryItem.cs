@@ -55,7 +55,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Array.IndexOf(Inventory.Instance.inventorySlots, originalSlot) &&
             originalSlot.transform.childCount == 1)
         {
-            Inventory.Instance.UnequipItem();
+            Inventory.Instance.DeselectItem();
         }
     }
 }
