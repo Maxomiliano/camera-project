@@ -187,11 +187,14 @@ public class Inventory : MonoBehaviour
         return ToolbarItem;
     }
 
-    public void DeselectItem()
+    public void DeselectItem(bool destroy = true)
     {
         if (ToolbarItem != null)
         {
-            Destroy(ToolbarItem.gameObject);
+            if (destroy)
+            {
+                Destroy(ToolbarItem.gameObject);                
+            }
             ToolbarItem = null;
             Debug.Log("Objeto en la mano eliminado correctamente.");
         }

@@ -5,9 +5,10 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 {
     [SerializeField] float timeToRecharge = 10f;
     [SerializeField] ObjectIdentifier objectIdentifier;
-    [SerializeField] Transform rechargPlace; 
+    [SerializeField] Transform rechargPlace;
     Inventory inventory;
     private Coroutine rechargeBatteryCoroutine;
+    private Rechargeable rechargingObject;
 
     private void Start()
     {
@@ -16,37 +17,43 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        ToolbarItem objectToRecharg = inventory.GetSelectedItem();
-        if (objectToRecharg == null) return;
-
-        GrabbableObject grabbableObj = objectToRecharg.gameObject.GetComponent<GrabbableObject>();
-        if (grabbableObj == null) return;
-
-        ItemInstance itemInstance = grabbableObj.ItemInstance;
-        if(itemInstance == null) return;
-
-        GameObject oldObject = objectToRecharg.gameObject;
-
-        inventory.RemoveItem(itemInstance);
-        inventory.DeselectItem();
-
-        GameObject rechargeableInstance = Instantiate(oldObject, rechargPlace);
-        Rechargeable newRecargeable = rechargeableInstance.GetComponent<Rechargeable>();
-
-        if (newRecargeable != null)
+        if (rechargingObject == null)
         {
-            float batteryLevel = itemInstance.GetAttribute("BatteryLevel");
-            newRecargeable.SetBatteryLevel(batteryLevel);
-        }
+            ToolbarItem objectToRecharg = inventory.GetSelectedItem();
+            if (objectToRecharg == null) return;
 
-        if (rechargeBatteryCoroutine != null)
-        {
-            StopCoroutine(rechargeBatteryCoroutine);
+            GrabbableObject grabbableObj = objectToRecharg.gameObject.GetComponent<GrabbableObject>();
+            if (grabbableObj == null) return;
+
+            ItemInstance itemInstance = grabbableObj.ItemInstance;
+            if (itemInstance == null) return;
+
+            GameObject oldObject = objectToRecharg.gameObject;
+
+            inventory.RemoveItem(itemInstance);
+            inventory.DeselectItem(false);
+
+            GameObject rechargeableInstance = oldObject;
+            rechargeableInstance.transform.SetParent(rechargPlace);
+            rechargingObject = rechargeableInstance.GetComponent<Rechargeable>();
+
+            /*
+            if (newRecargeable != null)
+            {
+                float batteryLevel = itemInstance.GetAttribute("BatteryLevel");
+                newRecargeable.SetBatteryLevel(batteryLevel);
+            }
+            */
+
+            if (rechargeBatteryCoroutine != null)
+            {
+                StopCoroutine(rechargeBatteryCoroutine);
+            }
+            rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(rechargingObject));
         }
-        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(newRecargeable, itemInstance));
     }
 
-    private IEnumerator RechargeBattery(Rechargeable rechargableObj, ItemInstance itemInstance)
+    private IEnumerator RechargeBattery(Rechargeable rechargableObj)
     {
         float rechargeRate = rechargableObj.MaxBatteryPercentage / timeToRecharge;
         while (rechargableObj.CurrentBatteryPercentage < rechargableObj.MaxBatteryPercentage)
@@ -60,7 +67,7 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
     public void PlaceItemOnRecharger(Rechargeable rechargeableObj)
     {
-        
+
     }
 
     public ObjectIdentifier GetIdenfier()
