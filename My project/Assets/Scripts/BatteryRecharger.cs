@@ -37,14 +37,6 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
             rechargeableInstance.transform.SetParent(rechargPlace);
             rechargingObject = rechargeableInstance.GetComponent<Rechargeable>();
 
-            /*
-            if (newRecargeable != null)
-            {
-                float batteryLevel = itemInstance.GetAttribute("BatteryLevel");
-                newRecargeable.SetBatteryLevel(batteryLevel);
-            }
-            */
-
             if (rechargeBatteryCoroutine != null)
             {
                 StopCoroutine(rechargeBatteryCoroutine);
