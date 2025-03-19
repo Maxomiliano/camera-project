@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ItemInstance : MonoBehaviour
+public class ItemInstance
 {
     public ItemDataSO ItemData { get; private set; }
     public Dictionary<string, float> DynamicAttributes { get; private set; }

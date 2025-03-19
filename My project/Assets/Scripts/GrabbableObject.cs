@@ -9,6 +9,13 @@ public class GrabbableObject : ToolbarItem, IInteractable
     public ItemInstance ItemInstance { get => _itemInstance; }
     public ItemDataSO ItemData { get => itemData; }
 
+    private void Start()
+    {
+        if (itemData != null)
+        {
+            _itemInstance = new ItemInstance(itemData);
+        }
+    }
 
     public void Interact()
     {
