@@ -6,20 +6,19 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-
-
     [Header("UI")]
     public Image image;
     public TMP_Text countText;
 
-    [HideInInspector] public ItemDataSO _item;
+    [HideInInspector] private ItemInstance itemInstance;
     [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
     [HideInInspector] public Transform _parentAfterDrag;
 
+    public ItemInstance ItemInstance { get => itemInstance; set => itemInstance = value; }
 
     public void Initialize(ItemDataSO newItem)
     {
-        _item = newItem;
+        itemInstance = new ItemInstance(newItem);
         image.sprite = newItem.icon;
         RefreshCount();
     }

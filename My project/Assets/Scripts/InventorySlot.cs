@@ -34,7 +34,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             // Verificar si el slot seleccionado está vacío y equipar el item
             if (Inventory.Instance.SelectedSlot == Array.IndexOf(Inventory.Instance.inventorySlots, this))
             {
-                Inventory.Instance.ShowItemInHand(inventoryItem._item, Inventory.Instance.handPosition);
+                Inventory.Instance.ShowItemInHand(inventoryItem.ItemInstance, Inventory.Instance.handPosition);
             }
         }
     }

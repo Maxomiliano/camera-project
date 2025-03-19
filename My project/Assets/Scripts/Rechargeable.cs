@@ -26,4 +26,9 @@ public class Rechargeable : MonoBehaviour
             Debug.Log($"Battery decreased by {ammount}");
         }
     }
+
+    public void SetBatteryLevel(float value)
+    {
+        currentBatteryPercentage = Mathf.Clamp(value, 0, maxBatteryPercentage);
+    }
 }

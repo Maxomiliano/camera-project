@@ -19,3 +19,4 @@ MonoBehaviour:
   type: 0
   actionType: 2
   stackable: 0
+  HasBattery: 1

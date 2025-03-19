@@ -10,6 +10,8 @@ public class ItemDataSO : ScriptableObject
     public ItemType type;
     public ActionType actionType;
     public bool stackable = true;
+    public bool HasBattery;
+
 }
 
 public enum ItemType
