@@ -31,17 +31,17 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         inventory.DeselectItem();
 
         GameObject rechargeableInstance = Instantiate(oldObject, rechargPlace);
-        Rechargeable newRecargeable = rechargeableInstance.GetComponent<Rechargeable>();
+        IRechargeable rechargeableObj = rechargeableInstance.GetComponent<ToolbarItem>() as IRechargeable;
 
         
         if (rechargeBatteryCoroutine != null)
         {
             StopCoroutine(rechargeBatteryCoroutine);
         }
-        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(newRecargeable));
+        rechargeBatteryCoroutine = StartCoroutine(RechargeBattery(rechargeableObj));
     }
 
-    private IEnumerator RechargeBattery(Rechargeable rechargableObj)
+    private IEnumerator RechargeBattery(IRechargeable rechargableObj)
     {
         float rechargeRate = rechargableObj.MaxBatteryPercentage / timeToRecharge;
         while (rechargableObj.CurrentBatteryPercentage < rechargableObj.MaxBatteryPercentage)
@@ -51,11 +51,6 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         }
         rechargableObj.RechargeBattery(rechargableObj.MaxBatteryPercentage);
         rechargeBatteryCoroutine = null;
-    }
-
-    public void PlaceItemOnRecharger(Rechargeable rechargeableObj)
-    {
-        
     }
 
     public ObjectIdentifier GetIdenfier()

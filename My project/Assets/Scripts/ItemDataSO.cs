@@ -1,5 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
+public enum ItemType
+{
+    Tool,
+    Weapon,
+    Armor
+}
+
+public enum ActionType
+{
+    MeleeHit,
+    RangeHit,
+    Capture
+}
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/ItemData")]
 public class ItemDataSO : ScriptableObject
@@ -30,19 +43,6 @@ public class ItemDataSO : ScriptableObject
         };
         return itemData;
     }
-}
-public enum ItemType
-{
-    Tool,
-    Weapon,
-    Armor
-}
-
-public enum ActionType
-{
-    MeleeHit,
-    RangeHit,
-    Capture
 }
 
 public class ItemData

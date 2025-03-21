@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 830033429781319756}
   - component: {fileID: 8140033764169559476}
   - component: {fileID: 23243412495999348}
-  - component: {fileID: 8657037044905215342}
   - component: {fileID: 6350431374375383873}
   m_Layer: 6
   m_Name: CameraObject
@@ -138,22 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b51b23f3a52df84dac104d3f1b591a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPrefab: {fileID: 7661324786262302195}
-  rechargeable: {fileID: 8657037044905215342}
---- !u!114 &8657037044905215342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7661324786262302195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e74053ea5082d54d823e7cb521ebe9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxBatteryPercentage: 100
-  currentBatteryPercentage: 100
+  _cameraPrefab: {fileID: 0}
+  _maxBatteryPercentage: 100
+  _currentBatteryPercentage: 100
 --- !u!114 &6350431374375383873
 MonoBehaviour:
   m_ObjectHideFlags: 0

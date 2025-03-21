@@ -3,20 +3,19 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : ToolbarItem
+public class CameraController : ToolbarItem, IRechargeable
 {
-    [SerializeField] GameObject cameraPrefab;
-    [SerializeField] Rechargeable rechargeable;
+    [SerializeField] private GameObject _cameraPrefab;
+    [SerializeField] private float _maxBatteryPercentage = 100f;
+    [SerializeField] private float _currentBatteryPercentage;
 
-    private Photographer photographer;
-    private GameObject playerFollowCamera;
+    private Photographer _photographer;
+    private GameObject _playerFollowCamera;
+    private bool _isAiming;
 
-    private GameObject equippedCamera;
-    private bool m_isAiming;
+    public float CurrentBatteryPercentage => _currentBatteryPercentage;
+    public float MaxBatteryPercentage => _maxBatteryPercentage;
 
-    public float Sensivity = 2f;
-
-    public Rechargeable Rechargeable { get => rechargeable; }
 
     private void Awake()
     {
@@ -25,57 +24,62 @@ public class CameraController : ToolbarItem
 
     private void Start()
     {
-        Photographer.OnScreenshotTaken += rechargeable.DecreaseBattery;
+        Photographer.OnScreenshotTaken += DecreaseBattery;
     }
 
     private void OnDestroy()
     {
-        Photographer.OnScreenshotTaken -= rechargeable.DecreaseBattery;
+        Photographer.OnScreenshotTaken -= DecreaseBattery;
     }
 
     private void Initialize()
     {
-        photographer = FindFirstObjectByType<Photographer>();
-        playerFollowCamera = GameObject.Find("PlayerFollowCamera");
+        _photographer = FindFirstObjectByType<Photographer>();
+        _playerFollowCamera = GameObject.Find("PlayerFollowCamera");
+    }
+
+    public void RechargeBattery(float ammount)
+    {
+        _currentBatteryPercentage = Mathf.Min(_currentBatteryPercentage + ammount, _maxBatteryPercentage);
+    }
+
+    public void DecreaseBattery(float ammount)
+    {
+        _currentBatteryPercentage = Mathf.Max(_currentBatteryPercentage - ammount, 0f);
+        if (_currentBatteryPercentage <= 0)
+        {
+            Debug.Log("You have to recharge the battery");
+        }
+        else
+        {
+            Debug.Log($"Battery decreased by {ammount}");
+        }
     }
 
     public override void OnSecondaryUse()
     {
         //Animacion de camara
-        m_isAiming = true;
-        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
+        _isAiming = true;
+        _playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
     }
 
     public override void OnSecondaryRelease()
     {
         //Animacion de camara
-        m_isAiming = false;
-        playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
+        _isAiming = false;
+        _playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
     }
 
     public override void OnPrimaryUse()
     {
-        if (m_isAiming && Rechargeable.CurrentBatteryPercentage > 0)
+        if (_isAiming && CurrentBatteryPercentage > 0)
         { 
-            photographer.TakeSnap();
+            _photographer.TakeSnap();
         }
     }
 
-    /*
-    public override void OnEquip(Transform handPosition)
-    {
-        if (equippedCamera != null) Destroy(equippedCamera);
-
-        equippedCamera = Instantiate(cameraPrefab, handPosition);
-        equippedCamera.transform.localPosition = Vector3.zero;
-        equippedCamera.transform.localRotation = Quaternion.identity;
-        equippedCamera.SetActive(true);
-        photographer.enabled = true;
-    }
-    */
-    
     public override void OnToolbarDeselected()
     {
-        photographer.enabled = false;
+        _photographer.enabled = false;
     }
 }
