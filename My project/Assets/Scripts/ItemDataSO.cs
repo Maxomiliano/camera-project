@@ -18,13 +18,13 @@ public enum ActionType
 public class ItemDataSO : ScriptableObject
 {
     public Sprite icon;
-    public string itemName;
-    public string itemAction;
     public GameObject prebaf;
     public ItemType type;
     public ActionType actionType;
-    public bool stackable = true;
+    public string itemName;
+    public string itemAction;
     public float initialBatteryAmmount;
+    public bool stackable = true;
 
     public ItemData GetData()
     {
@@ -48,12 +48,12 @@ public class ItemDataSO : ScriptableObject
 public class ItemData
 {
     public Sprite icon;
-    public string itemName;
-    public string itemAction;
     public GameObject prebaf;
     public ItemType type;
     public ActionType actionType;
-    public bool stackable = true;
+    public string itemName;
+    public string itemAction;
     public float initialBatteryAmmount;
     public float currentBatteryAmmount;
+    public bool stackable = true;
 }
