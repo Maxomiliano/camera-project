@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GrabbableObject : ToolbarItem, IInteractable
+public class GrabbableObject : MonoBehaviour, IInteractable
 {
     [SerializeField] ObjectIdentifier objectIdentifier;
     [SerializeField] ItemDataSO itemData;
@@ -13,6 +13,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
         if (inventory != null && inventory.AddItem(itemData))
         {
             Destroy(gameObject);
+            //Aca va el return ItemData
         }
     }
     
