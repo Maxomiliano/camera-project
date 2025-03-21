@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DemoScripts : MonoBehaviour
 {
+    /*
     public Inventory inventory;
     public ItemDataSO[] itemToPickup;
 
@@ -43,4 +44,5 @@ public class DemoScripts : MonoBehaviour
             Debug.Log("No item used!!");
         }
     }
+    */
 }

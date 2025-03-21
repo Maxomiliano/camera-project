@@ -1,19 +1,38 @@
 using UnityEngine;
 
-public class GrabbableObject : MonoBehaviour, IInteractable
+public class GrabbableObject : ToolbarItem, IInteractable
 {
     [SerializeField] ObjectIdentifier objectIdentifier;
-    [SerializeField] ItemDataSO itemData;
+    [SerializeField] ItemDataSO itemDataSO;
+    private ItemData _curentData;
 
-    public ItemDataSO ItemData { get => itemData; }
+    public ItemDataSO ItemData { get => itemDataSO; }
+    public ItemData CurentData { get => _curentData; set => _curentData = value; }
+
+    private void Awake()
+    {
+        _curentData = itemDataSO.GetData();
+    }
+
+    public void SetData(ItemData data)
+    {
+        _curentData = data;
+    }
+
+    public ItemData PickItem()
+    {
+        ItemData data = _curentData;
+        Destroy(gameObject);
+        return data;
+    }
 
     public void Interact()
     {
         Inventory inventory = FindFirstObjectByType<Inventory>();
-        if (inventory != null && inventory.AddItem(itemData))
+        if (inventory != null)
         {
-            Destroy(gameObject);
-            //Aca va el return ItemData
+            ItemData data = PickItem();
+            inventory.AddItem(data);
         }
     }
     

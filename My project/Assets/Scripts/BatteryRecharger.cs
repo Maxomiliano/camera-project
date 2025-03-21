@@ -22,7 +22,7 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         GrabbableObject grabbableObj = objectToRecharg.gameObject.GetComponent<GrabbableObject>();
         if (grabbableObj == null) return;
 
-        ItemDataSO itemData = grabbableObj.ItemData;
+        ItemData itemData = grabbableObj.CurentData;
         if (itemData == null) return;
 
         GameObject oldObject = objectToRecharg.gameObject;

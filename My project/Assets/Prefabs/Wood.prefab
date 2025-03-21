@@ -139,4 +139,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectIdentifier: {fileID: 8589572995366046369}
-  itemData: {fileID: 11400000, guid: cd3556f38ba97df4789d3b917e88e24b, type: 2}
+  itemDataSO: {fileID: 11400000, guid: cd3556f38ba97df4789d3b917e88e24b, type: 2}

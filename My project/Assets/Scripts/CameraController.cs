@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CameraController : ToolbarItem, IRechargeable
 {
-    [SerializeField] private GameObject _cameraPrefab;
+    //[SerializeField] private GameObject _cameraPrefab;
     [SerializeField] private float _maxBatteryPercentage = 100f;
     [SerializeField] private float _currentBatteryPercentage;
 

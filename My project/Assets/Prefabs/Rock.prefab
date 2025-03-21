@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectIdentifier: {fileID: 7301264788772624481}
-  itemData: {fileID: 11400000, guid: 8fadb3af75591b940b4e793d1c2fbd04, type: 2}
+  itemDataSO: {fileID: 11400000, guid: 8fadb3af75591b940b4e793d1c2fbd04, type: 2}
 --- !u!114 &7301264788772624481
 MonoBehaviour:
   m_ObjectHideFlags: 0

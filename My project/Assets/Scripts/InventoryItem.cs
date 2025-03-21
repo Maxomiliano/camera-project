@@ -10,12 +10,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
     public TMP_Text countText;
 
-    [HideInInspector] public ItemDataSO _item;
+    [HideInInspector] public ItemData _item;
     [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
     [HideInInspector] public Transform _parentAfterDrag;
 
 
-    public void Initialize(ItemDataSO newItem)
+    public void Initialize(ItemData newItem)
     {
         _item = newItem;
         image.sprite = newItem.icon;

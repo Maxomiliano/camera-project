@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public Transform handPosition;
 
-    private List<ItemDataSO> items = new List<ItemDataSO>();
+    private List<ItemData> items = new List<ItemData>();
     private int selectedSlot = 0;
 
     private ToolbarItem toolbarItem;
@@ -58,13 +58,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool AddItem(ItemDataSO item)
+    public bool AddItem(ItemData item)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];  //Variable del slot
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>(); //Variable del item que estaría en el slot
-            if (itemInSlot != null && itemInSlot._item == item && itemInSlot._count < maxStackItems && itemInSlot._item.stackable) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
+            if (itemInSlot != null && itemInSlot._item.Equals(item) && itemInSlot._count < maxStackItems && itemInSlot._item.stackable) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
             {
                 itemInSlot._count++;
                 itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
@@ -93,7 +93,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    private void SpawnNewItem(ItemDataSO item, InventorySlot slot)
+    private void SpawnNewItem(ItemData item, InventorySlot slot)
     {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
@@ -102,13 +102,13 @@ public class Inventory : MonoBehaviour
 
     //Si USE es verdadero entonces deberiamos deshacernos de este objeto o desincrementar su count
     //El bool USE seria para spawnear items por fuera del inventario. Ver significado.
-    public ItemDataSO GetSelectedItem(bool use)
+    public ItemData GetSelectedItem(bool use)
     {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null)
         {
-            ItemDataSO item = itemInSlot._item;
+            ItemData item = itemInSlot._item;
             if (use == true)
             {
                 itemInSlot._count--;
@@ -126,7 +126,7 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public void ShowItemInHand(ItemDataSO item, Transform handPosition)
+    public void ShowItemInHand(ItemData item, Transform handPosition)
     {
         DeselectItem();
 
@@ -145,6 +145,7 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Objeto instanciado: {obj.name}, Parent: {obj.transform.parent?.name}");
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
+        
         toolbarItem = obj.GetComponent<ToolbarItem>();
 
         if (ToolbarItem != null)
@@ -152,11 +153,12 @@ public class Inventory : MonoBehaviour
             toolbarItem.OnToolbarSelected(handPosition);
         }
         Debug.Log($"Objeto equipado: {toolbarItem.name}");
+        
     }
 
 
 
-    public bool RemoveItem(ItemDataSO item)
+    public bool RemoveItem(ItemData item)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
@@ -173,7 +175,7 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public ItemDataSO GetItem(int index)
+    public ItemData GetItem(int index)
     {
         if (index >= 0 && index < items.Count)
         {

@@ -24,8 +24,10 @@ public class ItemDataSO : ScriptableObject
     public string itemName;
     public string itemAction;
     public float initialBatteryAmmount;
+    public float currentBatteryAmmount;
     public bool stackable = true;
 
+    /*
     public ItemData GetData()
     {
         ItemData itemData = new ItemData
@@ -43,10 +45,15 @@ public class ItemDataSO : ScriptableObject
         };
         return itemData;
     }
+    */
+    public ItemData GetData()
+    {
+        return new ItemData(this);
+    }
 }
-
 public class ItemData
 {
+    public ItemDataSO itemDataSO;
     public Sprite icon;
     public GameObject prebaf;
     public ItemType type;
@@ -56,4 +63,18 @@ public class ItemData
     public float initialBatteryAmmount;
     public float currentBatteryAmmount;
     public bool stackable = true;
+
+    public ItemData(ItemDataSO dataSO)
+    {
+        itemDataSO = dataSO;
+        icon = dataSO.icon;
+        itemName = dataSO.itemName;
+        itemAction = dataSO.itemAction;
+        prebaf = dataSO.prebaf;
+        type = dataSO.type;
+        actionType = dataSO.actionType;
+        stackable = dataSO.stackable;
+        initialBatteryAmmount = dataSO.initialBatteryAmmount;
+        currentBatteryAmmount = dataSO.initialBatteryAmmount;
+    }
 }
