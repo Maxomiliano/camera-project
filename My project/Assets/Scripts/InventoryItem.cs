@@ -14,7 +14,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
     [HideInInspector] public Transform _parentAfterDrag;
 
-
+    //Set data
     public void Initialize(ItemData newItem)
     {
         _item = newItem;
@@ -22,6 +22,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RefreshCount();
     }
 
+    //Refresh
     public void RefreshCount()
     {
         countText.text = _count.ToString();
@@ -59,5 +60,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             Inventory.Instance.DeselectItem();
         }
+    }
+
+    public ItemData RemoveFromInventory()
+    {
+        gameObject.SetActive(false);
+        return _item; ;
     }
 }

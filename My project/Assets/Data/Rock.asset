@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 8a19ffa04c2dcdb45b5e7b2995d521a9, type: 3}
-  itemName: Rock
-  itemAction: (E) Grab
   prebaf: {fileID: 6048927643940873162, guid: 4247690eb6e984640ac17d660c7db67e, type: 3}
   type: 0
   actionType: 0
+  itemName: Rock
+  itemAction: (E) Grab
+  initialBatteryAmmount: 0
+  currentBatteryAmmount: 0
   stackable: 1

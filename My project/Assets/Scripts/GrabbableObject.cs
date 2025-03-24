@@ -1,29 +1,42 @@
+using TMPro;
 using UnityEngine;
 
+//Este funcionaría como el WorldItem
 public class GrabbableObject : ToolbarItem, IInteractable
 {
-    [SerializeField] ObjectIdentifier objectIdentifier;
-    [SerializeField] ItemDataSO itemDataSO;
-    private ItemData _curentData;
+    [SerializeField] private ObjectIdentifier objectIdentifier;
+    [SerializeField] private TextMeshProUGUI _nameText;
+    [SerializeField] private ItemDataSO _itemDataSO;
 
-    public ItemDataSO ItemData { get => itemDataSO; }
-    public ItemData CurentData { get => _curentData; set => _curentData = value; }
+    private ItemData _currentData;
+    public ItemDataSO ItemData { get => _itemDataSO; }
+    public ItemData CurrentData { get => _currentData; set => _currentData = value; }
 
     private void Awake()
     {
-        _curentData = itemDataSO.GetData();
+        _currentData = ItemData.GetData();
     }
 
     public void SetData(ItemData data)
     {
-        _curentData = data;
+        _currentData = data;
+        Refresh();
     }
 
     public ItemData PickItem()
     {
-        ItemData data = _curentData;
-        Destroy(gameObject);
+        ItemData data = _currentData;
+        Destroy(this.gameObject, 0.5f);
         return data;
+    }
+
+    public void Refresh()
+    {
+        if (_currentData == null)
+        {
+            return;
+        }
+        _nameText.text = _currentData.itemName;
     }
 
     public void Interact()

@@ -45,4 +45,14 @@ public class DemoScripts : MonoBehaviour
         }
     }
     */
+
+    [SerializeField] private GrabbableObject grabbableObject;
+    public GrabbableObject _currentInstantiatedItem;
+
+    [ContextMenu("Instantiate item A")]
+    public void InstantiateItem()
+    {
+        _currentInstantiatedItem = Instantiate(grabbableObject);
+        _currentInstantiatedItem.SetData(grabbableObject.CurrentData);
+    }
 }

@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    //Este add item es un Refresh tambien
     public bool AddItem(ItemData item)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
