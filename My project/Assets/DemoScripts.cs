@@ -53,6 +53,6 @@ public class DemoScripts : MonoBehaviour
     public void InstantiateItem()
     {
         _currentInstantiatedItem = Instantiate(grabbableObject);
-        _currentInstantiatedItem.SetData(grabbableObject.CurrentData);
+        _currentInstantiatedItem.SetData(_currentInstantiatedItem.CurrentData);
     }
 }
