@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
         InventoryItem inventoryItem = inventorySlots[newValue].GetComponentInChildren<InventoryItem>();
         if (inventoryItem != null)
         {
-            ShowItemInHand(inventoryItem._item, handPosition);
+            ShowItemInHand(inventoryItem.CurrentData, handPosition);
         }
         else
         {
@@ -116,7 +116,7 @@ public class Inventory : MonoBehaviour
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null)
         {
-            ItemData item = itemInSlot._item;
+            ItemData item = itemInSlot.CurrentData;
             if (use == true)
             {
                 itemInSlot._count--;
@@ -170,7 +170,7 @@ public class Inventory : MonoBehaviour
         {
             InventorySlot slot = inventorySlots[i];  //Variable del slot
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>(); //Variable del item que estaría en el slot
-            if (itemInSlot != null && itemInSlot._item == item && itemInSlot._count > 0) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
+            if (itemInSlot != null && itemInSlot.CurrentData == item && itemInSlot._count > 0) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
             {
                 itemInSlot._count--;
                 itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
