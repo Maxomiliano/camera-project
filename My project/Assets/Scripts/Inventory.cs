@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour
         }
         */
 
-         
+
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];  //Variable del slot
@@ -97,7 +97,7 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
-         
+
         return false;
     }
 
@@ -136,7 +136,8 @@ public class Inventory : MonoBehaviour
 
     public void ShowItemInHand(ItemData item, Transform handPosition)
     {
-        DeselectItem();
+        ItemData currentItemData = DeselectItem();
+        //DeselectItem();
 
         if (item == null)
         {
@@ -153,15 +154,19 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Objeto instanciado: {obj.name}, Parent: {obj.transform.parent?.name}");
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
-        
+
         toolbarItem = obj.GetComponent<ToolbarItem>();
+        GrabbableObject grabbableItem = toolbarItem.GetComponent<GrabbableObject>();
+        if (grabbableItem != null && currentItemData != null)
+        {
+            grabbableItem.SetData(currentItemData); // Restaurar los datos dinámicos.
+        }
 
         if (ToolbarItem != null)
         {
             toolbarItem.OnToolbarSelected(handPosition);
         }
         Debug.Log($"Objeto equipado: {toolbarItem.name}");
-        
     }
 
     public bool RemoveItem(ItemData item)
@@ -195,17 +200,30 @@ public class Inventory : MonoBehaviour
         return ToolbarItem;
     }
 
-    public void DeselectItem()
+    public ItemData DeselectItem()
     {
         if (ToolbarItem != null)
         {
+            ItemData itemData = ToolbarItem.GetComponent<GrabbableObject>()?.CurrentData;
+            if (itemData != null)
+            {
+                IRechargeable rechargeable = ToolbarItem.GetComponent<IRechargeable>();
+                if (rechargeable != null)
+                {
+                    itemData.currentBatteryAmmount = rechargeable.CurrentBatteryPercentage;
+                }
+            }
+
             Destroy(ToolbarItem.gameObject);
             ToolbarItem = null;
             Debug.Log("Objeto en la mano eliminado correctamente.");
+
+            return itemData;
         }
         else
         {
             Debug.Log("No había objeto equipado para eliminar.");
+            return null;
         }
     }
 }
