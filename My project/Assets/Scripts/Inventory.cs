@@ -58,10 +58,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    //Este add item es un Refresh tambien
+    //Este add item es un Refresh tambien.
+    //Posiblemente esta funcion deba ser refactorizada para que por un lado haga items.Add()
+    //y luego un Refresh()
     public bool AddItem(ItemData item)
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        /*
+         //Esta seria la parte para actualizar el numero del stack en la UI
+         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];  //Variable del slot
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>(); //Variable del item que estaría en el slot
@@ -72,7 +76,9 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+        */
 
+         
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];  //Variable del slot
@@ -91,6 +97,7 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+         
         return false;
     }
 
@@ -156,8 +163,6 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Objeto equipado: {toolbarItem.name}");
         
     }
-
-
 
     public bool RemoveItem(ItemData item)
     {

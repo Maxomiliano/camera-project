@@ -55,4 +55,17 @@ public class DemoScripts : MonoBehaviour
         _currentInstantiatedItem = Instantiate(grabbableObject);
         _currentInstantiatedItem.SetData(_currentInstantiatedItem.CurrentData);
     }
+
+    [ContextMenu("Use Camera")]
+    public void UseCamera()
+    {
+        CameraController cameraController = FindFirstObjectByType<CameraController>();
+        cameraController.DecreaseBattery(10f);
+    }
+
+    [ContextMenu("Pick current spawned item")]
+    public void PickCurrentSpawnedItem()
+    {
+        Inventory.Instance.AddItem(_currentInstantiatedItem.PickItem());
+    }
 }

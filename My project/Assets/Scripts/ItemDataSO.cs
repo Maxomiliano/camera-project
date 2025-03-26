@@ -48,7 +48,6 @@ public class ItemDataSO : ScriptableObject
 }
 public class ItemData
 {
-    //public ItemDataSO itemDataSO;
     public Sprite icon;
     public GameObject prebaf;
     public ItemType type;

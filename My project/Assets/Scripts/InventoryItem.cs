@@ -10,9 +10,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
     public TMP_Text countText;
 
-    [HideInInspector] public ItemData _item;
     [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
     [HideInInspector] public Transform _parentAfterDrag;
+    [HideInInspector] public ItemData _item;
 
     //Set data
     public void Initialize(ItemData newItem)

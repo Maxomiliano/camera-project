@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CameraController : ToolbarItem, IRechargeable
 {
-    //[SerializeField] private GameObject _cameraPrefab;
     [SerializeField] private float _maxBatteryPercentage = 100f;
     [SerializeField] private float _currentBatteryPercentage;
 
@@ -38,6 +37,11 @@ public class CameraController : ToolbarItem, IRechargeable
         _playerFollowCamera = GameObject.Find("PlayerFollowCamera");
     }
 
+    [ContextMenu("Recharge Battery Debugger")]
+    public void RechargeDebugger()
+    {
+        RechargeBattery(10f);
+    }
     public void RechargeBattery(float ammount)
     {
         _currentBatteryPercentage = Mathf.Min(_currentBatteryPercentage + ammount, _maxBatteryPercentage);
@@ -76,6 +80,7 @@ public class CameraController : ToolbarItem, IRechargeable
         { 
             _photographer.TakeSnap();
         }
+        //Aca hay que llamar a Refresh() suponiendo que queremos ver esos datos en la UI.
     }
 
     public override void OnToolbarDeselected()

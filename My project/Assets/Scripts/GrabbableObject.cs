@@ -9,12 +9,20 @@ public class GrabbableObject : ToolbarItem, IInteractable
     [SerializeField] private ItemDataSO _itemDataSO;
 
     private ItemData _currentData;
+    private IRechargeable _rechargeable;
     public ItemDataSO ItemData { get => _itemDataSO; }
     public ItemData CurrentData { get => _currentData; set => _currentData = value; }
 
     private void Awake()
     {
+        _rechargeable = GetComponent<IRechargeable>();
         _currentData = ItemData.GetData();
+    }
+
+    [ContextMenu("Set Data Debugger")]
+    public void SetDataDebugger()
+    {
+        SetData(_itemDataSO.GetData());
     }
 
     public void SetData(ItemData data)
@@ -25,6 +33,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
 
     public ItemData PickItem()
     {
+        //Esta funcion me devuelve la data que tenia el objeto luego de destruirlo
         ItemData data = _currentData;
         Destroy(this.gameObject, 0.5f);
         return data;
@@ -37,6 +46,11 @@ public class GrabbableObject : ToolbarItem, IInteractable
             return;
         }
         _nameText.text = _currentData.itemName;
+
+        if (_rechargeable != null)
+        {
+            _currentData.currentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;            
+        }
     }
 
     public void Interact()
