@@ -19,7 +19,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
     {
         if (_currentData == null)
         { 
-            _currentData = ItemData.GetData();        
+            _currentData = ItemData.GetData();
         }
         Debug.Log($"Awake: CurrentData = {_currentData?.currentBatteryAmmount}");
     }
@@ -30,10 +30,15 @@ public class GrabbableObject : ToolbarItem, IInteractable
         cameraController.OnBatteryValueChanged += Refresh;
     }
 
+    private void OnDestroy()
+    {
+        cameraController.OnBatteryValueChanged -= Refresh;
+    }
+
     public void SetData(ItemData data)
     {
-        Debug.Log($"SetData: Data passed = {data.currentBatteryAmmount}");
         _currentData = data;
+        Debug.Log($"SetData: Data passed = {data.currentBatteryAmmount}");
         Refresh();
     }
 
