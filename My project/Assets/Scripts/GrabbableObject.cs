@@ -17,7 +17,6 @@ public class GrabbableObject : ToolbarItem, IInteractable
 
     private void Awake()
     {
-        _rechargeable = GetComponent<IRechargeable>();
         if (_currentData == null)
         { 
             _currentData = ItemData.GetData();        
@@ -26,6 +25,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
     }
     private void Start()
     {
+        _rechargeable = GetComponent<IRechargeable>();
         cameraController = GetComponent<CameraController>();
         cameraController.OnBatteryValueChanged += Refresh;
     }
@@ -53,10 +53,12 @@ public class GrabbableObject : ToolbarItem, IInteractable
             return;
         }
         _nameText.text = _currentData.itemName;
+        
         if (_rechargeable != null)
         {
             _currentData.currentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;
         }
+        
         Debug.Log($"Refresh: CurrentData = {_currentData?.currentBatteryAmmount}");
     }
 
