@@ -5,12 +5,12 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
 
-    public int maxStackItems = 10;
     public InventorySlot[] inventorySlots;
+    public List<ItemData> _items = new List<ItemData>();
     public GameObject inventoryItemPrefab;
     public Transform handPosition;
+    public int maxStackItems = 10;
 
-    private List<ItemData> items = new List<ItemData>();
     private int selectedSlot = 0;
 
     private ToolbarItem toolbarItem;
@@ -86,6 +86,7 @@ public class Inventory : MonoBehaviour
             if (itemSlot == null) //Acá checkeo que el slot esté vacío, es decir que no tiene un item
             {
                 SpawnNewItem(item, slot);
+
                 if (inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>() == null)
                 {
                     ChangeSelectedSlot(i);
@@ -94,6 +95,7 @@ public class Inventory : MonoBehaviour
                 {
                     ShowItemInHand(item, handPosition);
                 }
+
                 return true;
             }
         }
@@ -188,9 +190,9 @@ public class Inventory : MonoBehaviour
 
     public ItemData GetItem(int index)
     {
-        if (index >= 0 && index < items.Count)
+        if (index >= 0 && index < _items.Count)
         {
-            return items[index];
+            return _items[index];
         }
         return null;
     }
