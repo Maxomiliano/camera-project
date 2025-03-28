@@ -40,7 +40,7 @@ public class ItemDataSO : ScriptableObject
             actionType = actionType,
             stackable = stackable,
             initialBatteryAmmount = initialBatteryAmmount,
-            currentBatteryAmmount = initialBatteryAmmount
+            currentBatteryAmmount = currentBatteryAmmount
 
         };
         return itemData;

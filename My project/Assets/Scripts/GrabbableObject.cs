@@ -14,26 +14,25 @@ public class GrabbableObject : ToolbarItem, IInteractable
     public ItemData CurrentData { get => _currentData; set => _currentData = value; }
     CameraController cameraController;
 
+
+    private void Awake()
+    {
+        _rechargeable = GetComponent<IRechargeable>();
+        if (_currentData == null)
+        { 
+            _currentData = ItemData.GetData();        
+        }
+        Debug.Log($"Awake: CurrentData = {_currentData?.currentBatteryAmmount}");
+    }
     private void Start()
     {
         cameraController = GetComponent<CameraController>();
         cameraController.OnBatteryValueChanged += Refresh;
     }
 
-    private void Awake()
-    {
-        _rechargeable = GetComponent<IRechargeable>();
-        _currentData = ItemData.GetData();
-    }
-
-    [ContextMenu("Set Data Debugger")]
-    public void SetDataDebugger()
-    {
-        SetData(_itemDataSO.GetData());
-    }
-
     public void SetData(ItemData data)
     {
+        Debug.Log($"SetData: Data passed = {data.currentBatteryAmmount}");
         _currentData = data;
         Refresh();
     }
@@ -54,11 +53,11 @@ public class GrabbableObject : ToolbarItem, IInteractable
             return;
         }
         _nameText.text = _currentData.itemName;
-
         if (_rechargeable != null)
         {
-            _currentData.currentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;            
+            _currentData.currentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;
         }
+        Debug.Log($"Refresh: CurrentData = {_currentData?.currentBatteryAmmount}");
     }
 
     public void Interact()
@@ -70,7 +69,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
             inventory.AddItem(data);
         }
     }
-    
+
     public ObjectIdentifier GetIdenfier()
     {
         return objectIdentifier;
