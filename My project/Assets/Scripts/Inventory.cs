@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
 
     public InventorySlot[] inventorySlots;
     public List<ItemData> _items = new List<ItemData>();
+    public List<InventoryItem> _inventoryItems = new List<InventoryItem>();
+
     public GameObject inventoryItemPrefab;
     public Transform handPosition;
     public int maxStackItems = 10;
@@ -20,6 +22,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Refresh();
     }
 
     private void Start()
@@ -61,8 +64,10 @@ public class Inventory : MonoBehaviour
     //Este add item es un Refresh tambien.
     //Posiblemente esta funcion deba ser refactorizada para que por un lado haga items.Add()
     //y luego un Refresh()
-    public bool AddItem(ItemData item)
+    public void AddItem(ItemData item)
     {
+        _items.Add(item);
+        Refresh();
         /*
          //Esta seria la parte para actualizar el numero del stack en la UI
          for (int i = 0; i < inventorySlots.Length; i++)
@@ -76,7 +81,6 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
-        */
 
 
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -86,7 +90,6 @@ public class Inventory : MonoBehaviour
             if (itemSlot == null) //Acá checkeo que el slot esté vacío, es decir que no tiene un item
             {
                 SpawnNewItem(item, slot);
-
                 if (inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>() == null)
                 {
                     ChangeSelectedSlot(i);
@@ -101,6 +104,35 @@ public class Inventory : MonoBehaviour
         }
 
         return false;
+        */
+    }
+
+    public void Refresh()
+    {
+        foreach (InventoryItem image in _inventoryItems)
+        {
+            image.gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < _items.Count; i++)
+        {
+            InventoryItem image = _inventoryItems[i];
+            ItemData item = _items[i];
+
+            if (image != null && item != null)
+            {
+                image.gameObject.SetActive(true);
+                image.Initialize(item);
+            }
+        }
+    }
+
+    public ItemData PopItem()
+    {
+        ItemData poppedItem = _items[^1];
+        _items.Remove(poppedItem);
+        Refresh();
+        return poppedItem;
     }
 
     private void SpawnNewItem(ItemData item, InventorySlot slot)
@@ -126,10 +158,12 @@ public class Inventory : MonoBehaviour
                 {
                     Destroy(itemInSlot.gameObject);
                 }
+                /*
                 else
                 {
                     itemInSlot.RefreshCount();
                 }
+                */
             }
             return item;
         }
@@ -180,7 +214,7 @@ public class Inventory : MonoBehaviour
             if (itemInSlot != null && itemInSlot.CurrentData == item && itemInSlot._count > 0) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
             {
                 itemInSlot._count--;
-                itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
+                //itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
                 return true;
             }
         }

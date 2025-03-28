@@ -8,7 +8,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     [Header("UI")]
     public Image image;
-    public TMP_Text countText;
+    public TMP_Text itemName;
+    //public TMP_Text countText;
 
     [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
     [HideInInspector] public Transform _parentAfterDrag;
@@ -20,10 +21,16 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void Initialize(ItemData data)
     {
         _currentData = data;
-        image.sprite = data.icon;
-        RefreshCount();
+        Refresh();
+        //RefreshCount();        
     }
 
+    public void Refresh()
+    {
+        image.sprite = _currentData.icon;
+        itemName.text = _currentData.itemName;
+    }
+    /*
     //Refresh
     public void RefreshCount()
     {
@@ -35,7 +42,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         countText.gameObject.SetActive(textActive);
     }
-
+    */
     public void OnBeginDrag(PointerEventData eventData)
     {
         image.raycastTarget = false;

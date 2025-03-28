@@ -68,4 +68,12 @@ public class DemoScripts : MonoBehaviour
     {
         Inventory.Instance.AddItem(_currentInstantiatedItem.PickItem());
     }
+
+    [ContextMenu("Pop from inventory")]
+    public void PopFromInventory()
+    {
+        ItemData data = Inventory.Instance.PopItem();
+        _currentInstantiatedItem = Instantiate(grabbableObject);
+        _currentInstantiatedItem.SetData(data);
+    }
 }
