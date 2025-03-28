@@ -9,6 +9,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [Header("UI")]
     public Image image;
     public TMP_Text itemName;
+    public TMP_Text currentChargeText;
     //public TMP_Text countText;
 
     [HideInInspector] public int _count = 1; //Para el stack, asi cada item cuenta 1
@@ -29,6 +30,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.sprite = _currentData.icon;
         itemName.text = _currentData.itemName;
+        currentChargeText.text = $"{_currentData.currentBatteryAmmount} / {_currentData.initialBatteryAmmount}";
     }
     /*
     //Refresh
