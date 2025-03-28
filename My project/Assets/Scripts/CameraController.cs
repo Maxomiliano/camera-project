@@ -12,6 +12,7 @@ public class CameraController : ToolbarItem, IRechargeable
     private GameObject _playerFollowCamera;
     private bool _isAiming;
 
+    public Action OnBatteryValueChanged;
     public float CurrentBatteryPercentage => _currentBatteryPercentage;
     public float MaxBatteryPercentage => _maxBatteryPercentage;
 
@@ -64,6 +65,7 @@ public class CameraController : ToolbarItem, IRechargeable
         {
             Debug.Log($"Battery decreased by {ammount}");
         }
+        OnBatteryValueChanged?.Invoke();
     }
 
     public override void OnSecondaryUse()

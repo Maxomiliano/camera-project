@@ -12,6 +12,13 @@ public class GrabbableObject : ToolbarItem, IInteractable
     private IRechargeable _rechargeable;
     public ItemDataSO ItemData { get => _itemDataSO; }
     public ItemData CurrentData { get => _currentData; set => _currentData = value; }
+    CameraController cameraController;
+
+    private void Start()
+    {
+        cameraController = GetComponent<CameraController>();
+        cameraController.OnBatteryValueChanged += Refresh;
+    }
 
     private void Awake()
     {
