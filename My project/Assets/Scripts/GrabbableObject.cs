@@ -46,6 +46,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
         return data;
     }
 
+    [ContextMenu("Refresh")]
     public void Refresh()
     {
         if (_currentData == null)

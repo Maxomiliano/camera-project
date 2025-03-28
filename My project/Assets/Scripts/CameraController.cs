@@ -46,6 +46,7 @@ public class CameraController : ToolbarItem, IRechargeable
     public void RechargeBattery(float ammount)
     {
         _currentBatteryPercentage = Mathf.Min(_currentBatteryPercentage + ammount, _maxBatteryPercentage);
+        OnBatteryValueChanged?.Invoke();
     }
 
     [ContextMenu("Use camera debugger")]
