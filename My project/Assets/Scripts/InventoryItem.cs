@@ -30,7 +30,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.sprite = _currentData.icon;
         itemName.text = _currentData.itemName;
-        currentChargeText.text = $"{_currentData.currentBatteryAmmount} / {_currentData.initialBatteryAmmount}";
+        currentChargeText.text = $"{_currentData.currentBatteryAmmount} / {_currentData.maxBatteryAmmount}";
     }
     /*
     //Refresh

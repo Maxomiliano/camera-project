@@ -5,26 +5,27 @@ using UnityEngine.InputSystem;
 
 public class CameraController : ToolbarItem, IRechargeable
 {
-    [SerializeField] private float _maxBatteryPercentage = 100f;
-    [SerializeField] private float _currentBatteryPercentage;
+    //[SerializeField] private float _maxBatteryPercentage = 100f;
+    //[SerializeField] private float _currentBatteryPercentage;
 
+    private ItemData _itemData;
     private Photographer _photographer;
     private GameObject _playerFollowCamera;
     private bool _isAiming;
 
     public Action OnBatteryValueChanged;
-    public float CurrentBatteryPercentage => _currentBatteryPercentage;
-    public float MaxBatteryPercentage => _maxBatteryPercentage;
+    public float CurrentBatteryPercentage => _itemData.currentBatteryAmmount;
+    public float MaxBatteryPercentage => _itemData.maxBatteryAmmount;
 
 
     private void Awake()
     {
-        Initialize();
+        //Initialize(_itemData);
     }
 
     private void Start()
     {
-        Photographer.OnScreenshotTaken += DecreaseBattery;
+        Photographer.OnScreenshotTaken += DecreaseBattery;   
     }
 
     private void OnDestroy()
@@ -32,8 +33,10 @@ public class CameraController : ToolbarItem, IRechargeable
         Photographer.OnScreenshotTaken -= DecreaseBattery;
     }
 
-    private void Initialize()
+    public void Initialize(ItemData itemData)
     {
+        _itemData = itemData;
+        //_itemData.currentBatteryAmmount = _itemData.maxBatteryAmmount;
         _photographer = FindFirstObjectByType<Photographer>();
         _playerFollowCamera = GameObject.Find("PlayerFollowCamera");
     }
@@ -45,7 +48,7 @@ public class CameraController : ToolbarItem, IRechargeable
     }
     public void RechargeBattery(float ammount)
     {
-        _currentBatteryPercentage = Mathf.Min(_currentBatteryPercentage + ammount, _maxBatteryPercentage);
+        _itemData.currentBatteryAmmount = Mathf.Min(_itemData.currentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
         OnBatteryValueChanged?.Invoke();
     }
 
@@ -57,8 +60,8 @@ public class CameraController : ToolbarItem, IRechargeable
 
     public void DecreaseBattery(float ammount)
     {
-        _currentBatteryPercentage = Mathf.Max(_currentBatteryPercentage - ammount, 0f);
-        if (_currentBatteryPercentage <= 0)
+        _itemData.currentBatteryAmmount = Mathf.Max(_itemData.currentBatteryAmmount - ammount, 0f);
+        if (_itemData.currentBatteryAmmount <= 0)
         {
             Debug.Log("You have to recharge the battery");
         }

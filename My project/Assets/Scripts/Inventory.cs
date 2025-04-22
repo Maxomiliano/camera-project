@@ -68,43 +68,6 @@ public class Inventory : MonoBehaviour
     {
         _items.Add(item);
         Refresh();
-        /*
-         //Esta seria la parte para actualizar el numero del stack en la UI
-         for (int i = 0; i < inventorySlots.Length; i++)
-        {
-            InventorySlot slot = inventorySlots[i];  //Variable del slot
-            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>(); //Variable del item que estaría en el slot
-            if (itemInSlot != null && itemInSlot._item.Equals(item) && itemInSlot._count < maxStackItems && itemInSlot._item.stackable) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
-            {
-                itemInSlot._count++;
-                itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
-                return true;
-            }
-        }
-
-
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
-            InventorySlot slot = inventorySlots[i];  //Variable del slot
-            InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>(); //Variable del item que estaría en el slot
-            if (itemSlot == null) //Acá checkeo que el slot esté vacío, es decir que no tiene un item
-            {
-                SpawnNewItem(item, slot);
-                if (inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>() == null)
-                {
-                    ChangeSelectedSlot(i);
-                }
-                if (selectedSlot == i)
-                {
-                    ShowItemInHand(item, handPosition);
-                }
-
-                return true;
-            }
-        }
-
-        return false;
-        */
     }
 
     public void Refresh()

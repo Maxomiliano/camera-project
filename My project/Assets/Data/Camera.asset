@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Camera
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5be0b474cb23c6c4890ead834fa04825, type: 3}
-  itemName: Camera
-  itemAction: (E) Grab
   prebaf: {fileID: 7661324786262302195, guid: a773856f9d9cfef4a800236d4daad973, type: 3}
   type: 0
   actionType: 2
+  itemName: Camera
+  itemAction: (E) Grab
+  maxBatteryAmmount: 100
+  currentBatteryAmmount: 0
   stackable: 0

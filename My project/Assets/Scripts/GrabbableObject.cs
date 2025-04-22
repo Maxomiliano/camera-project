@@ -27,6 +27,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
     {
         _rechargeable = GetComponent<IRechargeable>();
         cameraController = GetComponent<CameraController>();
+        cameraController.Initialize(_currentData);
         cameraController.OnBatteryValueChanged += Refresh;
     }
 

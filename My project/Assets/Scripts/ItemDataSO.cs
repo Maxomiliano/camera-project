@@ -23,7 +23,7 @@ public class ItemDataSO : ScriptableObject
     public ActionType actionType;
     public string itemName;
     public string itemAction;
-    public float initialBatteryAmmount;
+    public float maxBatteryAmmount;
     public float currentBatteryAmmount;
     public bool stackable = true;
 
@@ -32,15 +32,15 @@ public class ItemDataSO : ScriptableObject
     {
         ItemData itemData = new ItemData
         {
-            icon = icon,
             itemName = itemName,
+            icon = icon,
             itemAction = itemAction,
             prebaf = prebaf,
             type = type,
             actionType = actionType,
             stackable = stackable,
-            initialBatteryAmmount = initialBatteryAmmount,
-            currentBatteryAmmount = currentBatteryAmmount
+            currentBatteryAmmount = maxBatteryAmmount,
+            maxBatteryAmmount = maxBatteryAmmount,
 
         };
         return itemData;
@@ -54,7 +54,8 @@ public class ItemData
     public ActionType actionType;
     public string itemName;
     public string itemAction;
-    public float initialBatteryAmmount;
+    public float maxBatteryAmmount;
     public float currentBatteryAmmount;
     public bool stackable = true;
+    private float v;
 }
