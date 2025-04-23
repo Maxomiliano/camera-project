@@ -26,6 +26,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         //RefreshCount();        
     }
 
+    [ContextMenu("Refresh")]
     public void Refresh()
     {
         image.sprite = _currentData.icon;
@@ -33,7 +34,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         currentChargeText.text = $"{_currentData.currentBatteryAmmount} / {_currentData.maxBatteryAmmount}";
     }
     /*
-    //Refresh
     public void RefreshCount()
     {
         countText.text = _count.ToString();

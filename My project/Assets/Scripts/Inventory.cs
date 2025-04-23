@@ -70,6 +70,7 @@ public class Inventory : MonoBehaviour
         Refresh();
     }
 
+    [ContextMenu("Refresh")]
     public void Refresh()
     {
         foreach (InventoryItem image in _inventoryItems)
@@ -95,6 +96,7 @@ public class Inventory : MonoBehaviour
         ItemData poppedItem = _items[^1];
         _items.Remove(poppedItem);
         Refresh();
+        DeselectItem();
         return poppedItem;
     }
 

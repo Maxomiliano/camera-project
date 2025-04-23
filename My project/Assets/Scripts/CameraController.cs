@@ -17,26 +17,9 @@ public class CameraController : ToolbarItem, IRechargeable
     public float CurrentBatteryPercentage => _itemData.currentBatteryAmmount;
     public float MaxBatteryPercentage => _itemData.maxBatteryAmmount;
 
-
-    private void Awake()
-    {
-        //Initialize(_itemData);
-    }
-
-    private void Start()
-    {
-        Photographer.OnScreenshotTaken += DecreaseBattery;   
-    }
-
-    private void OnDestroy()
-    {
-        Photographer.OnScreenshotTaken -= DecreaseBattery;
-    }
-
     public void Initialize(ItemData itemData)
     {
         _itemData = itemData;
-        //_itemData.currentBatteryAmmount = _itemData.maxBatteryAmmount;
         _photographer = FindFirstObjectByType<Photographer>();
         _playerFollowCamera = GameObject.Find("PlayerFollowCamera");
     }
@@ -86,10 +69,12 @@ public class CameraController : ToolbarItem, IRechargeable
         _playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
     }
 
+    [ContextMenu("Use camera debugger TEST")]
     public override void OnPrimaryUse()
     {
         if (_isAiming && CurrentBatteryPercentage > 0)
-        { 
+        {
+            DecreaseBattery(_photographer.batteryPerShot);
             _photographer.TakeSnap();
         }
         //Aca hay que llamar a Refresh() suponiendo que queremos ver esos datos en la UI.

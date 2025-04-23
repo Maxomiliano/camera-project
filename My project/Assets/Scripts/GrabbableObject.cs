@@ -5,7 +5,6 @@ using UnityEngine;
 public class GrabbableObject : ToolbarItem, IInteractable
 {
     [SerializeField] private ObjectIdentifier objectIdentifier;
-    [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private ItemDataSO _itemDataSO;
 
     private ItemData _currentData;
@@ -57,9 +56,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
         if (_currentData == null)
         {
             return;
-        }
-        _nameText.text = _currentData.itemName;
-        
+        }        
         if (_rechargeable != null)
         {
             _currentData.currentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;

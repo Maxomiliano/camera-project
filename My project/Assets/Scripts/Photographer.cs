@@ -6,13 +6,11 @@ using UnityEngine.UI;
 
 public class Photographer : MonoBehaviour
 {
-    [SerializeField] private float batteryPerShot = 50f;
+    public float batteryPerShot = 20f;
     public Camera _fotoCamera;
     public RenderTexture _renderTexture;
     public RawImage _photoPreview;
     public string screenshotDirectory = "D:/Max/Screenshots";
-
-    public static Action<float> OnScreenshotTaken;
 
     private void Start()
     {
@@ -26,7 +24,6 @@ public class Photographer : MonoBehaviour
     {
         StartCoroutine(Screenshot());
         StartCoroutine(HidePhotoPreview());
-        OnScreenshotTaken?.Invoke(batteryPerShot);
     }
 
     private IEnumerator Screenshot()
