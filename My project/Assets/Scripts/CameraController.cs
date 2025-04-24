@@ -33,6 +33,7 @@ public class CameraController : ToolbarItem, IRechargeable
     {
         _itemData.currentBatteryAmmount = Mathf.Min(_itemData.currentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
         OnBatteryValueChanged?.Invoke();
+        Inventory.Instance.Refresh();
     }
 
     [ContextMenu("Use camera debugger")]
@@ -69,7 +70,6 @@ public class CameraController : ToolbarItem, IRechargeable
         _playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
     }
 
-    [ContextMenu("Use camera debugger TEST")]
     public override void OnPrimaryUse()
     {
         if (_isAiming && CurrentBatteryPercentage > 0)
@@ -77,7 +77,7 @@ public class CameraController : ToolbarItem, IRechargeable
             DecreaseBattery(_photographer.batteryPerShot);
             _photographer.TakeSnap();
         }
-        //Aca hay que llamar a Refresh() suponiendo que queremos ver esos datos en la UI.
+        Inventory.Instance.Refresh();
     }
 
     public override void OnToolbarDeselected()
