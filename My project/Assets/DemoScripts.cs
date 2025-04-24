@@ -25,6 +25,7 @@ public class DemoScripts : MonoBehaviour
         Inventory.Instance.AddItem(_currentInstantiatedItem.PickItem());
     }
 
+    /*
     [ContextMenu("Pop from inventory")]
     public void PopFromInventory()
     {
@@ -32,4 +33,5 @@ public class DemoScripts : MonoBehaviour
         _currentInstantiatedItem = Instantiate(grabbableObject);
         _currentInstantiatedItem.SetData(data);
     }
+    */
 }

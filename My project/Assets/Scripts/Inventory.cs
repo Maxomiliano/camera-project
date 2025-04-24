@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -91,13 +92,38 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public ItemData PopItem()
+    public void PopItem(ItemData itemToDrop)
     {
-        ItemData poppedItem = _items[^1];
-        _items.Remove(poppedItem);
+        if (itemToDrop == null || !_items.Contains(itemToDrop))
+        {
+            Debug.LogError("Item no encontrado en el inventario.");
+            return;
+        }
+
+        _items.Remove(itemToDrop);
         Refresh();
         DeselectItem();
-        return poppedItem;
+
+        if (itemToDrop.prebaf != null)
+        {
+            GameObject droppedItem = Instantiate(itemToDrop.prebaf);
+            droppedItem.transform.position = GetDropPosition();
+
+            GrabbableObject grabbableObject = droppedItem.GetComponent<GrabbableObject>();
+            if (grabbableObject != null)
+            {
+                grabbableObject.SetData(itemToDrop);
+            }
+            else
+            {
+                Debug.LogError("El objeto soltado no tiene un componente GrabbableObject.");
+            }
+        }
+    }
+
+    private Vector3 GetDropPosition()
+    {
+        return Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5f));
     }
 
     private void SpawnNewItem(ItemData item, InventorySlot slot)
