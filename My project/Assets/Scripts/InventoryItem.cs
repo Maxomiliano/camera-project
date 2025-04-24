@@ -62,17 +62,20 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData)
     {
         image.raycastTarget = true;
-       // transform.SetParent(_parentAfterDrag);
         Transform slotUnderPointer = eventData.pointerEnter != null ? eventData.pointerEnter.transform : _parentAfterDrag;
-
+        if (slotUnderPointer != null && slotUnderPointer.CompareTag("DropZone"))
+        {
+            Inventory.Instance.PopItem(_currentData);
+            transform.SetParent(_parentAfterDrag);
+            Debug.Log($"Objeto dropeado en la zona: {slotUnderPointer.name}");;
+        }
         // Verificar si el slot de origen estaba seleccionado y está vacío
-        //InventorySlot originalSlot = _parentAfterDrag.GetComponent<InventorySlot>();
-        if (slotUnderPointer != null && slotUnderPointer.GetComponent<InventorySlot>() != null)
+        else if (slotUnderPointer != null && slotUnderPointer.GetComponent<InventorySlot>() != null)
         {
             transform.SetParent(slotUnderPointer);
             Debug.Log($"Objeto movido al slot: {slotUnderPointer.name}");
         }
-        else 
+        else
         {
             transform.SetParent(_parentAfterDrag);
             Debug.Log($"Objeto devuelto al slot original: {_parentAfterDrag.name}");

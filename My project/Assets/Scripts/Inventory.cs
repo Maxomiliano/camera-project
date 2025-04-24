@@ -107,7 +107,7 @@ public class Inventory : MonoBehaviour
         if (itemToDrop.prebaf != null)
         {
             GameObject droppedItem = Instantiate(itemToDrop.prebaf);
-            droppedItem.transform.position = GetDropPosition();
+            //droppedItem.transform.position = GetDropPosition();
 
             GrabbableObject grabbableObject = droppedItem.GetComponent<GrabbableObject>();
             if (grabbableObject != null)
