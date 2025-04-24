@@ -62,16 +62,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    //Este add item es un Refresh tambien.
-    //Posiblemente esta funcion deba ser refactorizada para que por un lado haga items.Add()
-    //y luego un Refresh()
     public void AddItem(ItemData item)
     {
         _items.Add(item);
         Refresh();
     }
 
-    [ContextMenu("Refresh")]
     public void Refresh()
     {
         foreach (InventoryItem image in _inventoryItems)
@@ -126,13 +122,6 @@ public class Inventory : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5f));
     }
 
-    private void SpawnNewItem(ItemData item, InventorySlot slot)
-    {
-        GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
-        InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
-        inventoryItem.Initialize(item);
-    }
-
     //Si USE es verdadero entonces deberiamos deshacernos de este objeto o desincrementar su count
     //El bool USE seria para spawnear items por fuera del inventario. Ver significado.
     public ItemData GetSelectedItem(bool use)
@@ -149,12 +138,10 @@ public class Inventory : MonoBehaviour
                 {
                     Destroy(itemInSlot.gameObject);
                 }
-                /*
                 else
                 {
                     itemInSlot.RefreshCount();
                 }
-                */
             }
             return item;
         }
@@ -205,21 +192,11 @@ public class Inventory : MonoBehaviour
             if (itemInSlot != null && itemInSlot.CurrentData == item && itemInSlot._count > 0) //Acá checkeo que el slot tenga un item y que tenga el mismo item que estoy agarrando
             {
                 itemInSlot._count--;
-                //itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
+                itemInSlot.RefreshCount(); //Para aumentar el numero de stack en la UI
                 return true;
             }
         }
         return false;
-    }
-
-
-    public ItemData GetItem(int index)
-    {
-        if (index >= 0 && index < _items.Count)
-        {
-            return _items[index];
-        }
-        return null;
     }
 
     public ToolbarItem GetSelectedItem()

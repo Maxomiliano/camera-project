@@ -18,7 +18,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public ItemData CurrentData { get => _currentData; set => _currentData = value; }
 
-    //Set data
     public void Initialize(ItemData data)
     {
         _currentData = data;
@@ -26,7 +25,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RefreshCount();        
     }
 
-    [ContextMenu("Refresh")]
     public void Refresh()
     {
         image.sprite = _currentData.icon;
@@ -55,7 +53,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Sigue al cursor del mouse.
         transform.position = eventData.position;
     }
 
@@ -69,7 +66,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             transform.SetParent(_parentAfterDrag);
             Debug.Log($"Objeto dropeado en la zona: {slotUnderPointer.name}");;
         }
-        // Verificar si el slot de origen estaba seleccionado y está vacío
         else if (slotUnderPointer != null && slotUnderPointer.GetComponent<InventorySlot>() != null)
         {
             transform.SetParent(slotUnderPointer);
@@ -81,11 +77,5 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Debug.Log($"Objeto devuelto al slot original: {_parentAfterDrag.name}");
         }
         transform.localPosition = Vector3.zero;
-    }
-
-    public ItemData RemoveFromInventory()
-    {
-        gameObject.SetActive(false);
-        return _currentData; ;
     }
 }

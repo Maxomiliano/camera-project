@@ -23,23 +23,11 @@ public class CameraController : ToolbarItem, IRechargeable
         _photographer = FindFirstObjectByType<Photographer>();
         _playerFollowCamera = GameObject.Find("PlayerFollowCamera");
     }
-
-    [ContextMenu("Recharge Battery Debugger")]
-    public void RechargeDebugger()
-    {
-        RechargeBattery(10f);
-    }
     public void RechargeBattery(float ammount)
     {
         _itemData.currentBatteryAmmount = Mathf.Min(_itemData.currentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
         OnBatteryValueChanged?.Invoke();
         Inventory.Instance.Refresh();
-    }
-
-    [ContextMenu("Use camera debugger")]
-    public void UseCamera()
-    {
-        DecreaseBattery(10f);
     }
 
     public void DecreaseBattery(float ammount)
@@ -83,5 +71,16 @@ public class CameraController : ToolbarItem, IRechargeable
     public override void OnToolbarDeselected()
     {
         _photographer.enabled = false;
+    }
+
+    [ContextMenu("Recharge Battery Debugger")]
+    public void RechargeDebugger()
+    {
+        RechargeBattery(10f);
+    }
+    [ContextMenu("Use camera debugger")]
+    public void UseCamera()
+    {
+        DecreaseBattery(10f);
     }
 }
