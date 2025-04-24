@@ -62,17 +62,22 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData)
     {
         image.raycastTarget = true;
-        transform.SetParent(_parentAfterDrag);
+       // transform.SetParent(_parentAfterDrag);
+        Transform slotUnderPointer = eventData.pointerEnter != null ? eventData.pointerEnter.transform : _parentAfterDrag;
 
         // Verificar si el slot de origen estaba seleccionado y está vacío
-        InventorySlot originalSlot = _parentAfterDrag.GetComponent<InventorySlot>();
-        if (originalSlot != null && 
-            Inventory.Instance.SelectedSlot !=
-            Array.IndexOf(Inventory.Instance.inventorySlots, originalSlot) &&
-            originalSlot.transform.childCount == 1)
+        //InventorySlot originalSlot = _parentAfterDrag.GetComponent<InventorySlot>();
+        if (slotUnderPointer != null && slotUnderPointer.GetComponent<InventorySlot>() != null)
         {
-            Inventory.Instance.DeselectItem();
+            transform.SetParent(slotUnderPointer);
+            Debug.Log($"Objeto movido al slot: {slotUnderPointer.name}");
         }
+        else 
+        {
+            transform.SetParent(_parentAfterDrag);
+            Debug.Log($"Objeto devuelto al slot original: {_parentAfterDrag.name}");
+        }
+        transform.localPosition = Vector3.zero;
     }
 
     public ItemData RemoveFromInventory()
