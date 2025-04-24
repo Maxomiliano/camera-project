@@ -150,9 +150,6 @@ public class Inventory : MonoBehaviour
 
     public void ShowItemInHand(ItemData item, Transform handPosition)
     {
-        ItemData currentItemData = DeselectItem();
-        //DeselectItem();
-
         if (item == null)
         {
             return;
