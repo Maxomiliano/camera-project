@@ -50,11 +50,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = false;
         _parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
+        Debug.Log("Comenzando Drag and Drop");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //throw new System.NotImplementedException();
+        // Sigue al cursor del mouse.
+        transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
