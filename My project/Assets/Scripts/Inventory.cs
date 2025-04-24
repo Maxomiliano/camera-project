@@ -158,9 +158,9 @@ public class Inventory : MonoBehaviour
 
         toolbarItem = obj.GetComponent<ToolbarItem>();
         GrabbableObject grabbableItem = toolbarItem.GetComponent<GrabbableObject>();
-        if (grabbableItem != null && currentItemData != null)
+        if (grabbableItem != null)
         {
-            grabbableItem.SetData(currentItemData); // Restaurar los datos dinámicos.
+            grabbableItem.SetData(item); // Restaurar los datos dinámicos.
         }
 
         if (ToolbarItem != null)
