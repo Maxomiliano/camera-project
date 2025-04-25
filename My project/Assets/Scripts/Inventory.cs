@@ -98,6 +98,7 @@ public class Inventory : MonoBehaviour
             }
         }
         Destroy(itemToDrop.gameObject);
+        DeselectItem();
     }
 
     private Vector3 GetDropPosition()
