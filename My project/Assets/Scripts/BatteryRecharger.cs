@@ -39,11 +39,10 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
     private IEnumerator RechargeBattery(IRechargeable rechargableObj)
     {
-        if (rechargPlace.childCount == 0) yield break;
-
         float rechargeRate = rechargableObj.MaxBatteryPercentage / timeToRecharge;
         while (rechargableObj.CurrentBatteryPercentage < rechargableObj.MaxBatteryPercentage)
         {
+            if (rechargPlace.childCount == 0) yield break;
             rechargableObj.RechargeBattery(rechargeRate * Time.deltaTime);
             yield return null;
         }
