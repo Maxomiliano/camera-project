@@ -105,6 +105,25 @@ public class Inventory : MonoBehaviour
         DeselectItem();
     }
 
+    //Esto funciona para el battery recharger. Ver más adelante si no hay que refactorizar PopItem para que 
+    //la firma tenga un ItemData en lugar de InventoryItem
+    public void RemoveInventoryItemFromSlot(ItemData itemData)
+    {
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            InventoryItem inventoryItem = slot.GetComponentInChildren<InventoryItem>();
+            if (inventoryItem != null && inventoryItem.CurrentData == itemData)
+            {
+                // Destruye la representación de UI.
+                Destroy(inventoryItem.gameObject);
+                Debug.Log($"Ítem {itemData.itemName} removido de la UI.");
+                return;
+            }
+        }
+        Debug.LogWarning("No se encontró el ítem en los slots del inventario.");
+    }
+
+
     private Vector3 GetDropPosition()
     {
         return Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5f));
