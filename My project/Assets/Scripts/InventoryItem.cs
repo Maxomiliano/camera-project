@@ -62,11 +62,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.raycastTarget = true;
         Transform slotUnderPointer = eventData.pointerEnter != null ? eventData.pointerEnter.transform : _parentAfterDrag;
+        
         if (slotUnderPointer != null && slotUnderPointer.CompareTag("DropZone"))
         {
             Inventory.Instance.PopItem(this);
-            transform.SetParent(_parentAfterDrag);
-            Debug.Log($"Objeto dropeado en la zona: {slotUnderPointer.name}");;
+            Debug.Log($"Objeto dropeado en la zona: {slotUnderPointer.name}");
+            return;
         }
         else if (slotUnderPointer != null && slotUnderPointer.GetComponent<InventorySlot>() != null)
         {

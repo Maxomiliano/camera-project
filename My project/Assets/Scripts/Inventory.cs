@@ -82,7 +82,6 @@ public class Inventory : MonoBehaviour
 
     public void PopItem(InventoryItem itemToDrop)
     {
-
         if (itemToDrop.CurrentData.prebaf != null)
         {
             GameObject droppedItem = Instantiate(itemToDrop.CurrentData.prebaf);
@@ -98,41 +97,13 @@ public class Inventory : MonoBehaviour
                 Debug.LogError("El objeto soltado no tiene un componente GrabbableObject.");
             }
         }
-        Destroy(itemToDrop);
+        Destroy(itemToDrop.gameObject);
     }
 
     private Vector3 GetDropPosition()
     {
         return Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5f));
     }
-
-    //Si USE es verdadero entonces deberiamos deshacernos de este objeto o desincrementar su count
-    //El bool USE seria para spawnear items por fuera del inventario. Ver significado.
-    /*
-    public ItemData GetSelectedItem(bool use)
-    {
-        InventorySlot slot = inventorySlots[selectedSlot];
-        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-        if (itemInSlot != null)
-        {
-            ItemData item = itemInSlot.CurrentData;
-            if (use == true)
-            {
-                itemInSlot._count--;
-                if (itemInSlot._count <= 0)
-                {
-                    Destroy(itemInSlot.gameObject);
-                }
-                else
-                {
-                    itemInSlot.RefreshCount();
-                }
-            }
-            return item;
-        }
-        return null;
-    }
-    */
 
     public void ShowItemInHand(ItemData item, Transform handPosition)
     {
