@@ -5,18 +5,12 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 {
     [SerializeField] float timeToRecharge = 10f;
     [SerializeField] ObjectIdentifier objectIdentifier;
-    [SerializeField] Transform rechargPlace; 
-    Inventory inventory;
+    [SerializeField] Transform rechargPlace;
     private Coroutine rechargeBatteryCoroutine;
-
-    private void Start()
-    {
-        inventory = FindFirstObjectByType<Inventory>();
-    }
 
     public void Interact()
     {
-        ToolbarItem objectToRecharg = inventory.GetSelectedItem();
+        ToolbarItem objectToRecharg = Inventory.Instance.GetSelectedItem();
         if (objectToRecharg == null) return;
 
         GrabbableObject grabbableObj = objectToRecharg.gameObject.GetComponent<GrabbableObject>();
@@ -27,13 +21,15 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
 
         GameObject oldObject = objectToRecharg.gameObject;
 
-        inventory.RemoveItem(itemData);
-        inventory.DeselectItem();
+        oldObject.transform.SetParent(rechargPlace);
+        oldObject.transform.localPosition = Vector3.zero;
+        oldObject.transform.localRotation = Quaternion.identity;
 
-        GameObject rechargeableInstance = Instantiate(oldObject, rechargPlace);
-        IRechargeable rechargeableObj = rechargeableInstance.GetComponent<ToolbarItem>() as IRechargeable;
+        Inventory.Instance.PopItem(itemData);
 
-        
+        IRechargeable rechargeableObj = oldObject.GetComponent<ToolbarItem>() as IRechargeable;
+        if(rechargeableObj == null) return;
+
         if (rechargeBatteryCoroutine != null)
         {
             StopCoroutine(rechargeBatteryCoroutine);
@@ -46,6 +42,10 @@ public class BatteryRecharger : MonoBehaviour, IInteractable
         float rechargeRate = rechargableObj.MaxBatteryPercentage / timeToRecharge;
         while (rechargableObj.CurrentBatteryPercentage < rechargableObj.MaxBatteryPercentage)
         {
+            if (rechargPlace.childCount == 0)
+            {
+                yield break;
+            }
             rechargableObj.RechargeBattery(rechargeRate * Time.deltaTime);
             yield return null;
         }

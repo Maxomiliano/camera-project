@@ -215,7 +215,7 @@ public class Inventory : MonoBehaviour
                 }
             }
 
-            Destroy(ToolbarItem.gameObject);
+            //Destroy(ToolbarItem.gameObject);
             ToolbarItem = null;
             Debug.Log("Objeto en la mano eliminado correctamente.");
 
