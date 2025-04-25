@@ -46,7 +46,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
     {
         //Esta funcion me devuelve la data que tenia el objeto luego de destruirlo
         ItemData data = _currentData;
-        Destroy(this.gameObject, 0.5f);
+        Destroy(this.gameObject, 0.2f);
         return data;
     }
 
