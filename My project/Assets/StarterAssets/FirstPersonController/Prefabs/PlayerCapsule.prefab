@@ -522,7 +522,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  inventoryItemPrefab: {fileID: 3456391198409148965, guid: 664d7ef2105297e41abb54514792defd, type: 3}
+  inventoryItemPrefab: {fileID: 8129640186101832195, guid: 801d6370fdaeefb47a7f5e1969d61b30, type: 3}
   handPosition: {fileID: 1986939969150351257}
   maxStackItems: 10
 --- !u!114 &8864660732009441625

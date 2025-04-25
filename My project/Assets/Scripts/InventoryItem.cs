@@ -25,6 +25,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RefreshCount();        
     }
 
+    [ContextMenu("Refresh")]
     public void Refresh()
     {
         image.sprite = _currentData.icon;

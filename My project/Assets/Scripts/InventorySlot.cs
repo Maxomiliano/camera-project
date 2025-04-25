@@ -24,6 +24,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         image.color = notSelectedColor;
     }
 
+    //Esto es para mostrar el objeto si dropeamos algo en el slot que está seleccionado
+    //Posteriormente me sirve para hacer un swap items
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount == 0)

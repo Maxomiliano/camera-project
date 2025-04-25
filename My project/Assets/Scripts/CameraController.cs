@@ -27,7 +27,7 @@ public class CameraController : ToolbarItem, IRechargeable
     {
         _itemData.currentBatteryAmmount = Mathf.Min(_itemData.currentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
         OnBatteryValueChanged?.Invoke();
-        Inventory.Instance.Refresh();
+        //Inventory.Instance.Refresh();
     }
 
     public void DecreaseBattery(float ammount)
@@ -65,7 +65,7 @@ public class CameraController : ToolbarItem, IRechargeable
             DecreaseBattery(_photographer.batteryPerShot);
             _photographer.TakeSnap();
         }
-        Inventory.Instance.Refresh();
+        //Inventory.Instance.Refresh();
     }
 
     public override void OnToolbarDeselected()

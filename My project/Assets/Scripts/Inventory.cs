@@ -8,7 +8,6 @@ public class Inventory : MonoBehaviour
 
     public InventorySlot[] inventorySlots;
     public List<ItemData> _items = new List<ItemData>();
-    public List<InventoryItem> _inventoryItems = new List<InventoryItem>();
 
     public GameObject inventoryItemPrefab;
     public Transform handPosition;
@@ -23,7 +22,6 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Refresh();
     }
 
     private void Start()
@@ -64,28 +62,22 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
+        /*
         _items.Add(item);
-        Refresh();
+        */
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            SpawnNewItemInUI(item, slot); ;
+            return;
+        }
     }
 
-    public void Refresh()
+    public void SpawnNewItemInUI(ItemData item, InventorySlot slot)
     {
-        foreach (InventoryItem image in _inventoryItems)
-        {
-            image.gameObject.SetActive(false);
-        }
-
-        for (int i = 0; i < _items.Count; i++)
-        {
-            InventoryItem image = _inventoryItems[i];
-            ItemData item = _items[i];
-
-            if (image != null && item != null)
-            {
-                image.gameObject.SetActive(true);
-                image.Initialize(item);
-            }
-        }
+        GameObject newItem = Instantiate(inventoryItemPrefab, slot.transform);
+        InventoryItem inventoryItem = newItem.GetComponent<InventoryItem>();
+        inventoryItem.Initialize(item);
     }
 
     public void PopItem(ItemData itemToDrop)
@@ -97,8 +89,6 @@ public class Inventory : MonoBehaviour
         }
 
         _items.Remove(itemToDrop);
-        Refresh();
-        DeselectItem();
 
         if (itemToDrop.prebaf != null)
         {
@@ -124,6 +114,7 @@ public class Inventory : MonoBehaviour
 
     //Si USE es verdadero entonces deberiamos deshacernos de este objeto o desincrementar su count
     //El bool USE seria para spawnear items por fuera del inventario. Ver significado.
+    /*
     public ItemData GetSelectedItem(bool use)
     {
         InventorySlot slot = inventorySlots[selectedSlot];
@@ -147,6 +138,7 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+    */
 
     public void ShowItemInHand(ItemData item, Transform handPosition)
     {
