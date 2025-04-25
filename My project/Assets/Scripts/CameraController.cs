@@ -5,9 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CameraController : ToolbarItem, IRechargeable
 {
-    //[SerializeField] private float _maxBatteryPercentage = 100f;
-    //[SerializeField] private float _currentBatteryPercentage;
-
     private ItemData _itemData;
     private Photographer _photographer;
     private GameObject _playerFollowCamera;
@@ -27,7 +24,6 @@ public class CameraController : ToolbarItem, IRechargeable
     {
         _itemData.CurrentBatteryAmmount = Mathf.Min(_itemData.CurrentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
         OnBatteryValueChanged?.Invoke();
-        //Inventory.Instance.Refresh();
     }
 
     public void DecreaseBattery(float ammount)
@@ -53,6 +49,7 @@ public class CameraController : ToolbarItem, IRechargeable
 
     public override void OnSecondaryRelease()
     {
+        if (_playerFollowCamera == null) return;
         //Animacion de camara
         _isAiming = false;
         _playerFollowCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
@@ -65,7 +62,6 @@ public class CameraController : ToolbarItem, IRechargeable
             DecreaseBattery(_photographer.batteryPerShot);
             _photographer.TakeSnap();
         }
-        //Inventory.Instance.Refresh();
     }
 
     public override void OnToolbarDeselected()

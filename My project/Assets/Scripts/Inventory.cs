@@ -67,7 +67,11 @@ public class Inventory : MonoBehaviour
             if (inventorySlots[i].transform.childCount == 0)
             {
                 InventorySlot slot = inventorySlots[i];
-                SpawnNewItemInUI(item, slot); ;
+                SpawnNewItemInUI(item, slot);
+                if (i == selectedSlot)
+                {
+                    ShowItemInHand(item, handPosition);
+                }
                 return;
             }
         }
@@ -108,6 +112,10 @@ public class Inventory : MonoBehaviour
 
     public void ShowItemInHand(ItemData item, Transform handPosition)
     {
+        if (ToolbarItem != null)
+        {
+            DeselectItem();
+        }
         if (item == null)
         {
             return;
@@ -118,7 +126,6 @@ public class Inventory : MonoBehaviour
             Debug.LogError("Intentaste equipar un objeto sin prefab.");
             return;
         }
-
         GameObject obj = Instantiate(item.prebaf, handPosition);
         Debug.Log($"Objeto instanciado: {obj.name}, Parent: {obj.transform.parent?.name}");
         obj.transform.localPosition = Vector3.zero;
