@@ -10,7 +10,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         if (item != null)
         {
             Debug.Log($"Item {item.CurrentData.itemName} dropeado ");
-            Inventory.Instance.PopItem(item.CurrentData);
+            Inventory.Instance.PopItem(item);
         }
     }
 }

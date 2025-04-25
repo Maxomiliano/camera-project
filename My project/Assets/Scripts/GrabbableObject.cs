@@ -5,11 +5,11 @@ using UnityEngine;
 public class GrabbableObject : ToolbarItem, IInteractable
 {
     [SerializeField] private ObjectIdentifier objectIdentifier;
-    [SerializeField] private ItemDataSO _itemDataSO;
+    [SerializeField] private ItemData _itemDataSO;
 
     private ItemData _currentData;
     private IRechargeable _rechargeable;
-    public ItemDataSO ItemData { get => _itemDataSO; }
+    public ItemData ItemData { get => _itemDataSO; }
     public ItemData CurrentData { get => _currentData; set => _currentData = value; }
     CameraController cameraController;
 
@@ -17,10 +17,11 @@ public class GrabbableObject : ToolbarItem, IInteractable
     private void Awake()
     {
         if (_currentData == null)
-        { 
-            _currentData = ItemData.GetData();
+        {
+            _currentData = Instantiate(ItemData);
+            _currentData.CurrentBatteryAmmount = _currentData.maxBatteryAmmount;
         }
-        Debug.Log($"Awake: CurrentData = {_currentData?.currentBatteryAmmount}");
+        Debug.Log($"Awake: CurrentData = {_currentData?.CurrentBatteryAmmount}");
     }
     private void Start()
     {
@@ -38,7 +39,7 @@ public class GrabbableObject : ToolbarItem, IInteractable
     public void SetData(ItemData data)
     {
         _currentData = data;
-        Debug.Log($"SetData: Data passed = {data.currentBatteryAmmount}");
+        Debug.Log($"SetData: Data passed = {data.CurrentBatteryAmmount}");
         Refresh();
     }
 
@@ -59,10 +60,10 @@ public class GrabbableObject : ToolbarItem, IInteractable
         }        
         if (_rechargeable != null)
         {
-            _currentData.currentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;
+            _currentData.CurrentBatteryAmmount = _rechargeable.CurrentBatteryPercentage;
         }
         
-        Debug.Log($"Refresh: CurrentData = {_currentData?.currentBatteryAmmount}");
+        Debug.Log($"Refresh: CurrentData = {_currentData?.CurrentBatteryAmmount}");
     }
 
     public void Interact()

@@ -62,14 +62,14 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
-        /*
-        _items.Add(item);
-        */
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            InventorySlot slot = inventorySlots[i];
-            SpawnNewItemInUI(item, slot); ;
-            return;
+            if (inventorySlots[i].transform.childCount == 0)
+            {
+                InventorySlot slot = inventorySlots[i];
+                SpawnNewItemInUI(item, slot); ;
+                return;
+            }
         }
     }
 
@@ -80,31 +80,25 @@ public class Inventory : MonoBehaviour
         inventoryItem.Initialize(item);
     }
 
-    public void PopItem(ItemData itemToDrop)
+    public void PopItem(InventoryItem itemToDrop)
     {
-        if (itemToDrop == null || !_items.Contains(itemToDrop))
-        {
-            Debug.LogError("Item no encontrado en el inventario.");
-            return;
-        }
 
-        _items.Remove(itemToDrop);
-
-        if (itemToDrop.prebaf != null)
+        if (itemToDrop.CurrentData.prebaf != null)
         {
-            GameObject droppedItem = Instantiate(itemToDrop.prebaf);
+            GameObject droppedItem = Instantiate(itemToDrop.CurrentData.prebaf);
             //droppedItem.transform.position = GetDropPosition();
 
             GrabbableObject grabbableObject = droppedItem.GetComponent<GrabbableObject>();
             if (grabbableObject != null)
             {
-                grabbableObject.SetData(itemToDrop);
+                grabbableObject.SetData(itemToDrop.CurrentData);
             }
             else
             {
                 Debug.LogError("El objeto soltado no tiene un componente GrabbableObject.");
             }
         }
+        Destroy(itemToDrop);
     }
 
     private Vector3 GetDropPosition()
@@ -203,7 +197,7 @@ public class Inventory : MonoBehaviour
                 IRechargeable rechargeable = ToolbarItem.GetComponent<IRechargeable>();
                 if (rechargeable != null)
                 {
-                    itemData.currentBatteryAmmount = rechargeable.CurrentBatteryPercentage;
+                    itemData.CurrentBatteryAmmount = rechargeable.CurrentBatteryPercentage;
                 }
             }
 

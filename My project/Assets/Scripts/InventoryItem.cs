@@ -21,6 +21,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void Initialize(ItemData data)
     {
         _currentData = data;
+        _currentData.OnBatteryValueChanged += Refresh;
         Refresh();
         RefreshCount();        
     }
@@ -30,7 +31,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.sprite = _currentData.icon;
         itemName.text = _currentData.itemName;
-        currentChargeText.text = $"{_currentData.currentBatteryAmmount} / {_currentData.maxBatteryAmmount}";
+        currentChargeText.text = $"{_currentData.CurrentBatteryAmmount} / {_currentData.maxBatteryAmmount}";
     }
     
     public void RefreshCount()
@@ -63,7 +64,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Transform slotUnderPointer = eventData.pointerEnter != null ? eventData.pointerEnter.transform : _parentAfterDrag;
         if (slotUnderPointer != null && slotUnderPointer.CompareTag("DropZone"))
         {
-            Inventory.Instance.PopItem(_currentData);
+            Inventory.Instance.PopItem(this);
             transform.SetParent(_parentAfterDrag);
             Debug.Log($"Objeto dropeado en la zona: {slotUnderPointer.name}");;
         }
@@ -78,5 +79,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Debug.Log($"Objeto devuelto al slot original: {_parentAfterDrag.name}");
         }
         transform.localPosition = Vector3.zero;
+    }
+
+    private void OnDestroy()
+    {
+        if (_currentData != null)
+        {
+            _currentData.OnBatteryValueChanged -= Refresh;
+        }
     }
 }

@@ -14,7 +14,7 @@ public class CameraController : ToolbarItem, IRechargeable
     private bool _isAiming;
 
     public Action OnBatteryValueChanged;
-    public float CurrentBatteryPercentage => _itemData.currentBatteryAmmount;
+    public float CurrentBatteryPercentage => _itemData.CurrentBatteryAmmount;
     public float MaxBatteryPercentage => _itemData.maxBatteryAmmount;
 
     public void Initialize(ItemData itemData)
@@ -25,15 +25,15 @@ public class CameraController : ToolbarItem, IRechargeable
     }
     public void RechargeBattery(float ammount)
     {
-        _itemData.currentBatteryAmmount = Mathf.Min(_itemData.currentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
+        _itemData.CurrentBatteryAmmount = Mathf.Min(_itemData.CurrentBatteryAmmount + ammount, _itemData.maxBatteryAmmount);
         OnBatteryValueChanged?.Invoke();
         //Inventory.Instance.Refresh();
     }
 
     public void DecreaseBattery(float ammount)
     {
-        _itemData.currentBatteryAmmount = Mathf.Max(_itemData.currentBatteryAmmount - ammount, 0f);
-        if (_itemData.currentBatteryAmmount <= 0)
+        _itemData.CurrentBatteryAmmount = Mathf.Max(_itemData.CurrentBatteryAmmount - ammount, 0f);
+        if (_itemData.CurrentBatteryAmmount <= 0)
         {
             Debug.Log("You have to recharge the battery");
         }
