@@ -72,6 +72,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (InventoryItem image in _inventoryItems)
         {
+            //Destruir objeto
             image.gameObject.SetActive(false);
         }
 
@@ -79,7 +80,7 @@ public class Inventory : MonoBehaviour
         {
             InventoryItem image = _inventoryItems[i];
             ItemData item = _items[i];
-
+            //Crear objeto
             if (image != null && item != null)
             {
                 image.gameObject.SetActive(true);
@@ -95,8 +96,12 @@ public class Inventory : MonoBehaviour
             Debug.LogError("Item no encontrado en el inventario.");
             return;
         }
-
-        _items.Remove(itemToDrop);
+        int index = _items.IndexOf(itemToDrop);
+        if (index >= 0)
+        {
+            _items[index] = null;
+        }
+        //_items.Remove(itemToDrop);
         Refresh();
         DeselectItem();
 
